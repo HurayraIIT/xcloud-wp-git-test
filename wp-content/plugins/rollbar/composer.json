@@ -1,0 +1,59 @@
+{
+    "name": "rollbar/rollbar-php-wordpress",
+    "description": "WordPress plugin for Rollbar",
+    "type": "wordpress-plugin",
+	"require-dev": {
+        "yoast/phpunit-polyfills": "^2.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+		"squizlabs/php_codesniffer": "^3.5",
+		"phpcompatibility/php-compatibility": "^9.3",
+		"wp-coding-standards/wpcs": "^2.2",
+        "sirbrillig/phpcs-variable-analysis": "^2.8"
+    },
+    "license": "GNU GPL",
+    "authors": [
+        {
+            "name": "flowdee",
+            "email": "hello@flowdee.de"
+        },
+        {
+            "name": "Artur Moczulski",
+            "email": "artur.moczulski@gmail.com"
+        },
+        {
+          "name": "Rollbar, Inc.",
+          "email": "support@rollbar.com",
+          "role": "Developer"
+        }
+    ],
+
+    "support": {
+        "email": "support@rollbar.com"
+    },
+
+    "autoload": {
+      "psr-4": {
+        "Rollbar\\Wordpress\\": "src/",
+        "Rollbar\\Wordpress\\Tests\\": "tests/"
+      }
+    },
+    "extra": {
+        "scripts-description": {
+            "test": "Run all tests. Wrapper around npm run test"
+        }
+     },
+    "scripts": {
+        "test": [
+            "@pre-test",
+            "npm run test"
+        ],
+        "pre-test": [
+            "npm install"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -1,0 +1,275 @@
+# Copyright (C) 2023 WPDeveloper
+# This file is distributed under the same license as the SchedulePress Pro plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: SchedulePress Pro 5.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-scheduled-posts-pro\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-08-27T07:21:58+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.0\n"
+"X-Domain: wp-scheduled-posts-pro\n"
+
+#. Plugin Name of the plugin
+#: wp-scheduled-posts-pro.php:220
+msgid "SchedulePress Pro"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wpdeveloper.com/plugins/wp-scheduled-posts/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A complete solution to manage your scheduled posts in WordPress with Auto & Manual Scheduler, Missed Schedule Handler, Republish/Unpublish and many more."
+msgstr ""
+
+#. Author of the plugin
+msgid "WPDeveloper"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wpdeveloper.com"
+msgstr ""
+
+#: includes/Admin.php:55
+#: includes/Traits/Core.php:52
+msgid "Settings"
+msgstr ""
+
+#: includes/Admin.php:59
+msgid "Go Pro"
+msgstr ""
+
+#: includes/Admin.php:92
+msgid "You are using an incompatible version of"
+msgstr ""
+
+#: includes/Admin.php:92
+msgid "SchedulePress Pro."
+msgstr ""
+
+#: includes/Admin.php:92
+msgid "Please update to v2.5.3+"
+msgstr ""
+
+#: includes/Admin.php:107
+#: includes/Admin/Menu.php:15
+msgid "Manage Schedule"
+msgstr ""
+
+#: includes/Admin.php:117
+msgid "Advanced Schedule"
+msgstr ""
+
+#: includes/Admin.php:118
+msgid "Get options to set the published post status when scheduling it. Keep the post published and the updated content will be published according to schedule, or move the post to Draft until it is published. For more information check out this <a href=\"https://wpdeveloper.com/docs/advanced-schedule-update-published-posts/\" target=\"_blank\">doc</a>."
+msgstr ""
+
+#: includes/Admin.php:124
+msgid "Auto Scheduler"
+msgstr ""
+
+#: includes/Admin.php:130
+msgid "Auto Schedule"
+msgstr ""
+
+#: includes/Admin.php:136
+msgid "Sunday"
+msgstr ""
+
+#: includes/Admin.php:137
+#: includes/Admin.php:144
+#: includes/Admin.php:151
+#: includes/Admin.php:158
+#: includes/Admin.php:165
+#: includes/Admin.php:172
+#: includes/Admin.php:179
+msgid "(number of posts)"
+msgstr ""
+
+#: includes/Admin.php:143
+msgid "Monday"
+msgstr ""
+
+#: includes/Admin.php:150
+msgid "Tuesday"
+msgstr ""
+
+#: includes/Admin.php:157
+msgid "Wednesday"
+msgstr ""
+
+#: includes/Admin.php:164
+msgid "Thursday"
+msgstr ""
+
+#: includes/Admin.php:171
+msgid "Friday"
+msgstr ""
+
+#: includes/Admin.php:178
+msgid "Saturday"
+msgstr ""
+
+#: includes/Admin.php:185
+msgid "Start Time"
+msgstr ""
+
+#: includes/Admin.php:186
+msgid "(Default: 12:00 am)"
+msgstr ""
+
+#: includes/Admin.php:192
+msgid "End Time"
+msgstr ""
+
+#: includes/Admin.php:193
+msgid "(Default: 11:59 pm)"
+msgstr ""
+
+#: includes/Admin.php:199
+msgid "Manual Scheduler"
+msgstr ""
+
+#: includes/Admin.php:205
+msgid "Manual Schedule"
+msgstr ""
+
+#: includes/Admin.php:215
+msgid "Missed Schedule"
+msgstr ""
+
+#: includes/Admin.php:221
+msgid "Activate Missed Schedule Handler"
+msgstr ""
+
+#: includes/Admin.php:222
+msgid ""
+"WordPress might miss the schedule for a post for various reasons. Turn on this option to\n"
+"            let SchedulePress take care of this and publish the missed schedule."
+msgstr ""
+
+#: includes/Admin.php:228
+#: includes/Admin/Menu.php:16
+msgid "License"
+msgstr ""
+
+#: includes/Admin/WPDev/InstallCore.php:110
+msgid "You don't have permission to install the plugins"
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:96
+msgid "Please %1$sactivate your license%2$s key to enable updates for %3$s."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:105
+msgid "Your license has been expired. Please %1$srenew your license%2$s key to enable updates for %3$s."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:145
+#: includes/Admin/WPDev/Licensing.php:329
+msgid "%s License"
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:233
+msgid "HTTP Error"
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:238
+#: includes/Admin/WPDev/Licensing.php:404
+msgid "An error occurred, please try again"
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:276
+msgid "Your license key expired on %s."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:283
+msgid "Your license key has been disabled."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:288
+msgid "Invalid license key."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:294
+msgid "Your license is not active for this URL."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:299
+msgid "This appears to be an invalid license key for %s."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:304
+msgid "Your license key has reached its activation limit."
+msgstr ""
+
+#: includes/Admin/WPDev/Licensing.php:309
+msgid "An error occurred, please try again."
+msgstr ""
+
+#: includes/Assets.php:32
+#: includes/Assets.php:58
+msgid "Schedule at"
+msgstr ""
+
+#: includes/Scheduled/Manage.php:25
+msgctxt "post status"
+msgid "Republish"
+msgstr ""
+
+#: includes/Scheduled/Manage.php:135
+msgid "Scheduling Options"
+msgstr ""
+
+#: includes/Scheduled/Manage.php:176
+msgid "Unpublish On"
+msgstr ""
+
+#: includes/Scheduled/Manage.php:178
+#: includes/Scheduled/Manage.php:186
+msgid "Y/M/D H:M:S"
+msgstr ""
+
+#: includes/Scheduled/Manage.php:184
+msgid "Republish On"
+msgstr ""
+
+#: includes/Scheduled/Published.php:43
+#: includes/Scheduled/PublishedElementor.php:35
+msgctxt "post status"
+msgid "Advanced Scheduled"
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:99
+msgid "A new version of ScheduledPress is available. Please upgrade now."
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:100
+msgid "Upgrade Now"
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:220
+msgid "requires"
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:220
+msgid "SchedulePress"
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:220
+msgid "core plugin to be installed. Please get the plugin now!"
+msgstr ""
+
+#: wp-scheduled-posts-pro.php:220
+msgid "Install Now!"
+msgstr ""
+
+#. translators: 1: `<h3>` opening tag, 2: `</h3>` closing tag, 3: PHP version. 4: Link opening tag, 5: Link closing tag.
+#: wp-scheduled-posts-pro.php:240
+msgid "%1$sSchedulePress Pro isn’t running because PHP is outdated.%2$s Update to PHP version %3$s and get back to creating!"
+msgstr ""

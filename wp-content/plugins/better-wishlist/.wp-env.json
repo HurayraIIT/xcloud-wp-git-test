@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "https://downloads.wordpress.org/plugin/woocommerce.zip"
+  ],
+  "port": 8082,
+  "env": {
+    "tests": {
+      "port": 8083
+    }
+  },
+  "mappings": {
+    "wp-content/plugins/better-wishlist": "."
+  },
+  "phpVersion": "7.4"
+}

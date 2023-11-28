@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$USER_HOME$/Documents/GitHub/easyjobs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/betterdocs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/betterdocs-pro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/betterlinks-pro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/bettertools" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/embedpress-pro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/wp-content/plugins/essential-addons-elementor" vcs="Git" />
+  </component>
+</project>

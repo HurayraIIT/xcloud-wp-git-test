@@ -1,0 +1,193 @@
+<div class="betterwishlist-page-wrap">
+  {% if products %}
+    <table class="shop_table cart wishlist_table wishlist_view traditional responsive">
+      <thead>
+        <tr>
+          <th class="product-remove">
+            <span class="nobr">
+            </span>
+          </th>
+          {% if 'yes' == i18n.table_image %}
+            <th class="product-thumbnail">
+            <span class="nobr">{{ i18n.table_image_text }}</span>
+            </th>
+          {% endif %}
+          {% if 'yes' == i18n.table_product_name %}
+            <th class="product-name">
+              <span class="nobr">{{ i18n.table_name_text }}
+              </span>
+            </th>
+          {% endif %}
+          {% if 'yes' == i18n.table_stock %}
+            <th class="stock-status">
+              <span class="nobr">{{ i18n.table_stock_status_text }}
+              </span>
+            </th>
+          {% endif %}
+          {% if 'yes' == i18n.table_price %}
+          <th class="product-price">
+            <span class="nobr">{{ i18n.table_price_text }}
+            </span>
+          </th>
+          {% endif %}
+          {% if 'yes' == i18n.table_add_to_cart %}
+          <th class="add-to-cart">
+            <span class="nobr">{{ i18n.table_add_to_cart_text }}</span>
+          </th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody class="wishlist-items-wrapper">
+        {% for product in products %}
+          <tr id="wishlist-row-{{ product.id }}"
+              data-row-id="{{ product.id }}"
+              class="wishlist-row">
+            <td class="product-remove">
+              <div>
+                <a href="#"
+                  data-product_id="{{ product.id }}"
+                  class="remove betterwishlist-remove-from-wishlist"
+                  title="{{ i18n.remove_this_product }}">
+                  ×
+                </a>
+              </div>
+            </td>
+            {% if 'yes' == i18n.table_image %}
+            <td class="product-thumbnail">
+              <a href="{{ product.url }}">
+                <img class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                    src="{{ product.thumbnail_url }}"
+                    sizes="(max-width: 450px) 100vw, 450px"
+                    width="450"
+                    height="450" />
+              </a>
+            </td>
+            {% endif %}
+            {% if 'yes' == i18n.table_product_name %}
+            <td class="product-name">
+              <a href="{{ product.url }}">{{ product.title }}
+              </a>
+            </td>
+            {% endif %}
+            {% if 'yes' == i18n.table_stock %}
+            <td class="stock-status">
+              {% if 'In Stock' == product.stock_status %}
+              <span class="in_stock">{{ product.stock_status }}
+              </span>
+              {% endif %}
+              {% if 'Out Of Stock' == product.stock_status %}
+              <span class="out_stock">{{ product.stock_status }}
+              </span>
+              {% endif %}
+              {% if 'On Backorder' == product.stock_status %}
+              <span class="">{{ product.stock_status }}
+              </span>
+              {% endif %}
+            </td>
+            {% endif %}
+
+            {% if 'yes' == i18n.table_price %}
+            <td class="product-price">
+              <span>
+                {% if product.ragular_price == true and product.sale_price == true %}
+                <del aria-hidden="true">
+                  <span class="woocommerce-Price-amount amount">
+                    <bdi> <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{ product.ragular_price }}</bdi>
+                  </span>
+                </del>
+                <ins>
+                  <span class="woocommerce-Price-amount amount">
+                    <bdi><span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{ product.sale_price }}</bdi>
+                  </span>
+                </ins>
+                {% endif %}
+
+                {% if product.ragular_price == true and product.sale_price == false %}
+                  <ins>
+                    <span class="woocommerce-Price-amount amount">
+                      <bdi>
+                        <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{ product.ragular_price }}
+                      </bdi>
+                    </span>
+                  </ins>
+                {% endif %}
+
+                {% if product.is_variable_product %}
+                  {% if product.variable_min_price == product.variable_max_price %}
+                    <ins>
+                      <span class="woocommerce-Price-amount amount">
+                        <bdi>
+                          <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{product.variable_min_price}}
+                        </bdi>
+                      </span>
+                    </ins>
+                  {% else %}
+                    <ins>
+                      <span class="woocommerce-Price-amount amount">
+                        <bdi>
+                          <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{product.variable_min_price}} -
+                          <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{ product.variable_max_price }}
+                        </bdi>
+                      </span>
+                    </ins>
+                  {% endif %}
+                {% endif %}
+
+                {% if product.is_grouped_product %}
+                  <ins>
+                    <span class="woocommerce-Price-amount amount">
+                      <bdi>
+                        <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{product.group_min_price}} -
+                        <span class="woocommerce-Price-currencySymbol">{{product.currency_symbol | raw}}</span>{{product.group_max_price}}
+                      </bdi>
+                    </span>
+                  </ins>
+                {% endif %}
+
+              </span>
+            </td>
+            {% endif %}
+
+            {% if 'yes' == i18n.table_add_to_cart %}
+            <td class="add-to-cart">
+              {% if 'Out Of Stock' == product.stock_status %}
+                <a class="button betterwishlist-add-to-cart"
+                  data-product_id="{{ product.id }}"
+                  href="{{ product.url }}"
+                  target="_blank">
+                  {{ i18n.read_more }}
+                </a>
+              {% elseif product.is_variable_product or product.is_grouped_product %}
+                <a class="button betterwishlist-add-to-cart"
+                  data-product_id="{{ product.id }}"
+                  href="{{ product.url }}"
+                  target="_blank">
+                  {{ i18n.select_option }}
+                </a>
+              {% else %}
+                <a class="button betterwishlist-add-to-cart betterwishlist-add-to-cart-single add_to_cart_button"
+                  data-product_id="{{ product.id }}"
+                  href="#">
+                  {{ i18n.add_to_cart }}
+                </a>
+              {% endif %}
+            </td>
+            {% endif %}
+
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="add-to-cart-multiple">
+      <a href="#"
+        data-products="{{ ids|join(',') }}"
+        class="button betterwishlist-add-to-cart betterwishlist-add-to-cart-multiple">
+        {{ i18n.add_all_to_cart }}
+      </a>
+    </div>
+  {% else %}
+    <div class="no-record-message">
+      {{ i18n.no_records_found }}
+    </div>
+  {% endif %}
+</div>

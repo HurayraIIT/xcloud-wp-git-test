@@ -1,0 +1,438 @@
+/* p.product.woocommerce.add_to_cart_inline.betterwishlist-addto-cart-button
+	.add_to_cart_button
+	+ a {
+	display: block;
+	text-align: center;
+	margin: 0px !important;
+	max-width: 95%;
+} */
+
+/* animation fadeIn */
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes fadeOut {
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes fadeOut {
+	100% {
+		opacity: 0;
+	}
+}
+
+/* General */
+.woocommerce a.remove.betterwishlist-remove-from-wishlist:before {
+	top: 2px !important;
+}
+
+.betterwishlist-page-wrap a {
+	text-decoration: none !important;
+}
+
+/* Button Spinner Loader */
+.betterwishlist-add-to-wishlist {
+	position: relative;
+}
+
+.betterwishlist-add-to-wishlist[disabled=disabled] {
+	background-color: #767676 !important;
+}
+
+.betterwishlist-spinner-none {
+    display: none !important;
+}
+
+.betterwishlist-overlay {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    width: 50px;
+    height: 45px;
+    z-index: 999;
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+.betterwishlist-spinner {
+    display: inline-block;
+}
+
+.betterwishlist-spinner:after {
+    content: " ";
+    display: block;
+    width: 15px;
+    height: 15px;
+	border-radius: 50%;
+    margin: 20% auto;
+    border: 3px solid #ddd;
+    border-color: #fff transparent #fff transparent;
+    animation: betterwishlist-spinner 1.2s linear infinite;
+}
+
+@keyframes betterwishlist-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* notification */
+.betterwishlist-notification-wrap {
+	position: fixed;
+	top: 0;
+	right: 50px;
+	z-index: 99999;
+}
+.betterwishlist-notification {
+	display: table;
+	float: right;
+	clear: both;
+	padding: 8px 12px;
+	margin: 5px 0;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	transition: ease opacity 250ms;
+	animation: fadeIn 250ms 100ms both, fadeOut 250ms 3000ms both;
+}
+.betterwishlist-notification > svg {
+    float: left;
+    width: 14px;
+    margin-right: 8px;
+}
+
+.betterwishlist-notification {
+    display: flex;
+    align-items: center;
+}
+
+.betterwishlist-notification.success {
+	background-color: #00a65a;
+	color: #fff;
+}
+.betterwishlist-notification.error {
+	background-color: #dd4b39;
+	color: #fff;
+}
+.betterwishlist-notification p {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+/* Wishlist Table Css */
+.betterwishlist-page-wrap table {
+	border: 0;
+}
+.betterwishlist-page-wrap .wishlist_table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+	margin: 4rem 0;
+	max-width: 100%;
+	overflow: hidden;
+	width: 100%;
+	line-height: inherit;
+	padding: 0;
+	text-align: inherit;
+	letter-spacing: normal;
+}
+.betterwishlist-page-wrap table tbody,
+.betterwishlist-page-wrap table td,
+.betterwishlist-page-wrap table th {
+	border: 0;
+}
+.betterwishlist-page-wrap table *,
+hr {
+	border-color: #dcd7ca;
+}
+
+.betterwishlist-page-wrap table thead {
+	vertical-align: bottom;
+	white-space: nowrap;
+}
+
+.betterwishlist-page-wrap table tr {
+	border: none;
+	font-size: inherit;
+	line-height: inherit;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+}
+
+.betterwishlist-page-wrap table th {
+	word-break: normal;
+	font-size: inherit;
+	font-weight: 700;
+	line-height: 1.4;
+	margin: 0;
+	overflow: visible;
+	padding: 0.5em;
+	text-align: inherit;
+}
+
+.betterwishlist-page-wrap .product-remove {
+	text-align: center;
+}
+
+.betterwishlist-page-wrap table tbody,
+.betterwishlist-page-wrap table td,
+.betterwishlist-page-wrap table th {
+	border: 0;
+}
+
+.betterwishlist-page-wrap table tbody tr {
+	font-size: 0.88889em;
+	border-top: 1px solid #eee !important;
+	border: none;
+	line-height: inherit;
+	margin: 0;
+	padding: 0;
+	text-align: inherit;
+}
+
+.betterwishlist-page-wrap table.wishlist_table td {
+	word-break: normal;
+	line-height: 1.4;
+	margin: 0;
+	overflow: visible;
+	padding: 0.5em;
+	font-size: inherit;
+	text-align: inherit;
+}
+
+.betterwishlist-page-wrap table.wishlist_table .add-to-cart {
+	min-width: 120px;
+	text-align: center;
+}
+
+.betterwishlist-page-wrap table.wishlist_table .add-to-cart a {
+	padding: 10px 20px;
+}
+
+.betterwishlist-page-wrap table.wishlist_table del bdi {
+	text-decoration-line: line-through;
+}
+
+.betterwishlist-page-wrap table.wishlist_table del,
+.betterwishlist-page-wrap table.wishlist_table ins {
+	text-decoration: none;
+}
+
+.betterwishlist-page-wrap .product-remove {
+	text-align: center;
+}
+
+.betterwishlist-page-wrap .remove {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 18px;
+	font-size: 20px;
+	font-weight: 700;
+	text-align: center;
+	border-radius: 100%;
+	text-decoration: none !important;
+	background: #fff;
+	color: #000;
+}
+
+.betterwishlist-page-wrap table td.product-thumbnail {
+	padding: 1.4rem;
+	width: 10%;
+}
+
+.betterwishlist-page-wrap table.wishlist_table img {
+	height: auto;
+	max-width: 120px;
+	display: block;
+}
+
+.betterwishlist-page-wrap table td.product-name {
+	padding-left: 1.5vw;
+}
+
+.betterwishlist-add-to-wishlist {
+	text-align: center;
+}
+
+.woocommerce .button.betterwishlist-add-to-wishlist {
+    margin: 10px 0 10px;
+	cursor: pointer;
+}
+
+.theme-oceanwp div.product form.cart a.button.betterwishlist-add-to-wishlist {
+	width: 200px;
+}
+.woocommerce .betterwishlist-add-wishlist-wrapper {
+	width:100%;
+	display: inline-block;
+}
+
+.wishlist-items-wrapper .stock-status .out_stock {
+	color: #dd4b39;
+}
+
+.wishlist-items-wrapper .stock-status .in_stock {
+	color: #00a65a;
+}
+
+/* Added wishlist button */
+.woocommerce .betterwishlist-added-to-wishlist {
+	margin: 10px 0 10px;
+    cursor: pointer !important;
+	padding: 10px 20px !important;
+}
+
+.woocommerce .betterwishlist-add-to-wishlist span,
+.woocommerce .betterwishlist-added-to-wishlist span {
+	margin-right: 3px;
+}
+
+/*----------------------------------
+	Added IcoMoon Font
+------------------------------------*/
+@font-face {
+	font-family: 'icomoon';
+	src:  url('fonts/icomoon.eot?b79dg8');
+	src:  url('fonts/icomoon.eot?b79dg8#iefix') format('embedded-opentype'),
+		url('fonts/icomoon.ttf?b79dg8') format('truetype'),
+		url('fonts/icomoon.woff?b79dg8') format('woff'),
+		url('fonts/icomoon.svg?b79dg8#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-heart-stroke:before {
+	content: "\e900";
+}
+.icon-heart-fill:before {
+	content: "\e901";
+}
+.icon-happy:before {
+	content: "\e9df";
+}
+.icon-happy2:before {
+	content: "\e9e0";
+}
+.icon-smile:before {
+	content: "\e9e1";
+}
+.icon-smile2:before {
+	content: "\e9e2";
+}
+.icon-tongue:before {
+	content: "\e9e3";
+}
+.icon-tongue2:before {
+	content: "\e9e4";
+}
+.icon-sad:before {
+	content: "\e9e5";
+}
+.icon-sad2:before {
+	content: "\e9e6";
+}
+.icon-wink:before {
+	content: "\e9e7";
+}
+.icon-wink2:before {
+	content: "\e9e8";
+}
+.icon-grin:before {
+	content: "\e9e9";
+}
+.icon-grin2:before {
+	content: "\e9ea";
+}
+.icon-cool:before {
+	content: "\e9eb";
+}
+.icon-cool2:before {
+	content: "\e9ec";
+}
+.icon-angry:before {
+	content: "\e9ed";
+}
+.icon-angry2:before {
+	content: "\e9ee";
+}
+.icon-evil:before {
+	content: "\e9ef";
+}
+.icon-evil2:before {
+	content: "\e9f0";
+}
+.icon-shocked:before {
+	content: "\e9f1";
+}
+.icon-shocked2:before {
+	content: "\e9f2";
+}
+.icon-baffled:before {
+	content: "\e9f3";
+}
+.icon-baffled2:before {
+	content: "\e9f4";
+}
+.icon-confused:before {
+	content: "\e9f5";
+}
+.icon-confused2:before {
+	content: "\e9f6";
+}
+.icon-neutral:before {
+	content: "\e9f7";
+}
+.icon-neutral2:before {
+	content: "\e9f8";
+}
+.icon-hipster:before {
+	content: "\e9f9";
+}
+.icon-hipster2:before {
+	content: "\e9fa";
+}
+.icon-wondering:before {
+	content: "\e9fb";
+}
+.icon-wondering2:before {
+	content: "\e9fc";
+}
+.icon-sleepy:before {
+	content: "\e9fd";
+}
+.icon-sleepy2:before {
+	content: "\e9fe";
+}

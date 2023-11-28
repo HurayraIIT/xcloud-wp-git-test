@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/better-wishlist/src" isTestSource="false" packagePrefix="BetterWishlist" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/betterlinks-pro/includes" isTestSource="false" packagePrefix="BetterLinksPro" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/betterlinks/includes" isTestSource="false" packagePrefix="BetterLinks" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/elementor-pro" isTestSource="false" packagePrefix="ElementorPro" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/elementor/includes" isTestSource="false" packagePrefix="Elementor" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/embedpress" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/essential-addons-for-elementor-lite/includes" isTestSource="false" packagePrefix="Essential_Addons_Elementor" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/notificationx-pro/includes" isTestSource="false" packagePrefix="NotificationXPro" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/notificationx-pro/includes/Extensions/Google/lib" isTestSource="false" packagePrefix="NxProGA" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/notificationx/includes" isTestSource="false" packagePrefix="NotificationX" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/reviewx/app" isTestSource="false" packagePrefix="ReviewX" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/reviewx/app/Services/WPFluent/libs/viocon/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/reviewx/app/Services/WPFluent/src" isTestSource="false" packagePrefix="WpFluent" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/sme-accounting/includes" isTestSource="false" packagePrefix="SMEVai" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/templately/includes" isTestSource="false" packagePrefix="Templately" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/wp-scheduled-posts-pro/includes" isTestSource="false" packagePrefix="WPSP_PRO" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/wp-scheduled-posts/includes" isTestSource="false" packagePrefix="WPSP" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/themes" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/themes/neve/header-footer-grid" isTestSource="false" packagePrefix="HFG" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/themes/neve/inc" isTestSource="false" packagePrefix="Neve" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-includes" isTestSource="false" packagePrefix="PHPMailer" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="easyjobs" />
+  </component>
+</module>

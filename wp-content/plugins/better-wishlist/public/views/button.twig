@@ -1,0 +1,67 @@
+{% if 'yes' == i18n.wishlist_require_login and i18n.is_user_login %}
+    {% if already_in_wishlist %}
+        <div class="betterwishlist-add-wishlist-wrapper">
+            <a
+                data-product-id="{{ product_id }}"
+                class="button betterwishlist-add-to-wishlist"
+                aria-label="{{ i18n.add_to_wishlist }}"
+                rel="nofollow" style="background-color: red !important">
+
+                {% if "yes" == i18n.show_wishlist_icon %}
+                    <span class="{{ i18n.added_wishlist_icon }}"></span>
+                {% endif %}
+                {{ i18n.already_in_wishlist }}
+            </a>
+        </div>
+        {% else %}
+        <div class="betterwishlist-add-wishlist-wrapper">
+            <a
+                data-product-id="{{ product_id }}"
+                class="button betterwishlist-add-to-wishlist"
+                aria-label="{{ i18n.add_to_wishlist }}"
+                rel="nofollow">
+
+                {% if "yes" == i18n.show_wishlist_icon %}
+                    <span class="{{ i18n.wishlist_icon }}"></span>
+                {% endif %}
+
+                {{ i18n.add_to_wishlist|raw }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% elseif 'no' == i18n.wishlist_require_login %}
+        {% if already_in_wishlist %}
+            <div class="betterwishlist-add-wishlist-wrapper">
+                <a
+                    href="{{i18n.view_wishlist_link}}"
+                    data-product-id="{{ product_id }}"
+                    aria-label="{{ i18n.add_to_wishlist }}"
+                    class="button betterwishlist-added-to-wishlist"
+                >
+                    {% if "yes" == i18n.show_wishlist_icon %}
+                        <span class="{{ i18n.added_wishlist_icon }}"></span>
+                    {% endif %}
+                    {{ i18n.already_in_wishlist }}
+                </a>
+            </div>
+            {% else %}
+            <div class="betterwishlist-add-wishlist-wrapper">
+                <a
+                    data-product-id="{{ product_id }}"
+                    class="button betterwishlist-add-to-wishlist"
+                    aria-label="{{ i18n.add_to_wishlist }}"
+                    rel="nofollow">
+
+                    <div id="loader-{{ product_id }}" class="betterwishlist-spinner betterwishlist-spinner-none betterwishlist-overlay"></div>
+
+                    {% if "yes" == i18n.show_wishlist_icon %}
+                        <span class="{{ i18n.wishlist_icon }}"></span>
+                    {% endif %}
+
+                    {{ i18n.add_to_wishlist|raw }}
+                </a>
+            </div>
+        {% endif %}
+
+{% endif %}
