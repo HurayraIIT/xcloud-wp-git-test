@@ -32,13 +32,13 @@ abstract class Base {
 	}
 
 	/**
-	 * Disable unserializing of the class.
+	 * Disable un-serializing of the class.
 	 *
 	 * @access public
 	 * @since 2.0.0
 	 */
 	public function __wakeup() {
-		// Unserializing instances of the class is forbidden.
+		// Un-serializing instances of the class is forbidden.
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'templately' ), '1.0.0' );
 	}
 

@@ -308,7 +308,6 @@ abstract class Theme_Document extends Library_Document {
 				'autocomplete' => [
 					'object' => QueryModule::QUERY_OBJECT_JS,
 				],
-				'separator' => 'none',
 				'export' => false,
 				'condition' => [
 					'preview_type!' => [
@@ -338,7 +337,6 @@ abstract class Theme_Document extends Library_Document {
 				'label_block' => true,
 				'show_label' => false,
 				'text' => esc_html__( 'Apply & Preview', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorThemeBuilder:ApplyPreview',
 			]
 		);
@@ -409,16 +407,9 @@ abstract class Theme_Document extends Library_Document {
 			$elements_data = $this->get_elements_data();
 		}
 
-		$is_dom_optimization_active = Plugin::elementor()->experiments->is_feature_active( 'e_dom_optimization' );
 		?>
 		<<?php Utils::print_validated_html_tag( $wrapper_tag ); ?> <?php Utils::print_html_attributes( $this->get_container_attributes() ); ?>>
-		<?php if ( ! $is_dom_optimization_active ) : ?>
-			<div class="elementor-section-wrap">
-		<?php endif; ?>
-				<?php $this->print_elements( $elements_data ); ?>
-		<?php if ( ! $is_dom_optimization_active ) : ?>
-			</div>
-		<?php endif; ?>
+			<?php $this->print_elements( $elements_data ); ?>
 		</<?php Utils::print_validated_html_tag( $wrapper_tag ); ?>>
 		<?php
 	}

@@ -1,0 +1,48 @@
+<wpml-config>
+    <admin-texts>
+        <key name="theme_mods_flexia">
+            <key name="blogdescription"/>
+            <key name="custom_logo"/>
+            <key name="flexia_custom_sticky_logo"/>
+            <key name="site_icon"/>
+            <key name="flexia_custom_login_url"/>
+            <key name="flexia_topbar_content"/>
+            <key name="flexia_header_top_phone"/>
+            <key name="flexia_header_top_email"/>
+            <key name="flexia_header_top_location"/>
+            <key name="flexia_header_top_location_link"/>
+            <key name="flexia_custom_login_text"/>
+            <key name="flexia_custom_logout_text"/>
+            <key name="flexia_custom_login_url"/>
+            <key name="flexia_header_social_link_facebook"/>
+            <key name="flexia_header_social_link_instagram"/>
+            <key name="flexia_header_social_link_twitter"/>
+            <key name="flexia_header_social_link_linkedin"/>
+            <key name="flexia_header_social_link_youtube"/>
+            <key name="flexia_header_social_link_pinterest"/>
+            <key name="flexia_header_social_link_reddit"/>
+            <key name="flexia_header_social_link_rss"/>
+            <key name="flexia_footer_content"/>
+            <key name="blog_title"/>
+            <key name="blog_desc"/>
+            <key name="flexia_blog_load_more_text"/>
+            <key name="flexia_blog_loading_text"/>
+            <key name="flexia_archive_load_more_text"/>
+            <key name="flexia_archive_loading_text"/>
+            <key name="flexia_social_sharing_text"/>
+            <key name="header_image"/>
+            <key name="flexia_call_to_action_title"/>
+            <key name="flexia_call_to_action_subtitle"/>
+            <key name="flexia_call_to_action_button_text"/>
+            <key name="flexia_call_to_action_url"/>
+            <key name="flexia_preloader_image"/>
+            <key name="flexia_blog_category_all_text"/>
+        </key>
+        <key name="flexia-underconstruction">
+            <key name="flexia_uc_site_title" />
+            <key name="flexia_uc_tag_line" />
+            <key name="flexia_uc_content" />
+            <key name="flexia_uc_bg_image" />
+        </key>
+    </admin-texts>
+</wpml-config>

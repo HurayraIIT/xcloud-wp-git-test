@@ -4,27 +4,43 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit04c2eb7c50184d909493a055f6800f43
+class ComposerStaticInit9395179380f964c5be4198fe19201258
 {
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'WordPress\\Plugin_Check\\' => 23,
+        ),
         'V' => 
         array (
             'VariableAnalysis\\' => 17,
         ),
-        'D' => 
+        'P' => 
         array (
-            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
+            'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 57,
+        ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'WordPress\\Plugin_Check\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes',
+        ),
         'VariableAnalysis\\' => 
         array (
             0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
         ),
-        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        'PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
         array (
             0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 
@@ -77,84 +93,16 @@ class ComposerStaticInit04c2eb7c50184d909493a055f6800f43
         'PHPCSUtils\\Utils\\TextStrings' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/TextStrings.php',
         'PHPCSUtils\\Utils\\UseStatements' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/UseStatements.php',
         'PHPCSUtils\\Utils\\Variables' => __DIR__ . '/..' . '/phpcsstandards/phpcsutils/PHPCSUtils/Utils/Variables.php',
-        'WordPressCS\\WordPress\\AbstractArrayAssignmentRestrictionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/AbstractArrayAssignmentRestrictionsSniff.php',
-        'WordPressCS\\WordPress\\AbstractClassRestrictionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/AbstractClassRestrictionsSniff.php',
-        'WordPressCS\\WordPress\\AbstractFunctionParameterSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/AbstractFunctionParameterSniff.php',
-        'WordPressCS\\WordPress\\AbstractFunctionRestrictionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/AbstractFunctionRestrictionsSniff.php',
-        'WordPressCS\\WordPress\\PHPCSHelper' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/PHPCSHelper.php',
-        'WordPressCS\\WordPress\\Sniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Arrays\\ArrayDeclarationSpacingSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/ArrayDeclarationSpacingSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Arrays\\ArrayIndentationSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/ArrayIndentationSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Arrays\\ArrayKeySpacingRestrictionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/ArrayKeySpacingRestrictionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Arrays\\CommaAfterArrayItemSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/CommaAfterArrayItemSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Arrays\\MultipleStatementAlignmentSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/MultipleStatementAlignmentSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Classes\\ClassInstantiationSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Classes/ClassInstantiationSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\CodeAnalysis\\AssignmentInConditionSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/CodeAnalysis/AssignmentInConditionSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\CodeAnalysis\\EmptyStatementSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/CodeAnalysis/EmptyStatementSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\CodeAnalysis\\EscapedNotTranslatedSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/CodeAnalysis/EscapedNotTranslatedSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\DirectDatabaseQuerySniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/DirectDatabaseQuerySniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\PreparedSQLPlaceholdersSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/PreparedSQLPlaceholdersSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\PreparedSQLSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/PreparedSQLSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\RestrictedClassesSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/RestrictedClassesSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\RestrictedFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/RestrictedFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DB\\SlowDBQuerySniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DB/SlowDBQuerySniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DateTime\\CurrentTimeTimestampSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DateTime/CurrentTimeTimestampSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\DateTime\\RestrictedFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/DateTime/RestrictedFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Files\\FileNameSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Files/FileNameSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\NamingConventions\\PrefixAllGlobalsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/NamingConventions/PrefixAllGlobalsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\NamingConventions\\ValidFunctionNameSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/NamingConventions/ValidFunctionNameSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\NamingConventions\\ValidHookNameSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/NamingConventions/ValidHookNameSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\NamingConventions\\ValidPostTypeSlugSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/NamingConventions/ValidPostTypeSlugSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\NamingConventions\\ValidVariableNameSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/NamingConventions/ValidVariableNameSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\DevelopmentFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/DevelopmentFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\DisallowShortTernarySniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/DisallowShortTernarySniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\DiscouragedPHPFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/DiscouragedPHPFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\DontExtractSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/DontExtractSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\IniSetSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/IniSetSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\NoSilencedErrorsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/NoSilencedErrorsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\POSIXFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/POSIXFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\PregQuoteDelimiterSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/PregQuoteDelimiterSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\RestrictedPHPFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/RestrictedPHPFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\StrictComparisonsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/StrictComparisonsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\StrictInArraySniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/StrictInArraySniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\TypeCastsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/TypeCastsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\PHP\\YodaConditionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/PHP/YodaConditionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Security\\EscapeOutputSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Security/EscapeOutputSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Security\\NonceVerificationSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Security/NonceVerificationSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Security\\PluginMenuSlugSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Security/PluginMenuSlugSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Security\\SafeRedirectSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Security/SafeRedirectSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Security\\ValidatedSanitizedInputSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Security/ValidatedSanitizedInputSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\Utils\\I18nTextDomainFixerSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/Utils/I18nTextDomainFixerSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\AlternativeFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/AlternativeFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\CapitalPDangitSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/CapitalPDangitSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\CronIntervalSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/CronIntervalSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DeprecatedClassesSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DeprecatedClassesSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DeprecatedFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DeprecatedFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DeprecatedParameterValuesSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DeprecatedParameterValuesSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DeprecatedParametersSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DeprecatedParametersSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DiscouragedConstantsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DiscouragedConstantsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\DiscouragedFunctionsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/DiscouragedFunctionsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\EnqueuedResourceParametersSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/EnqueuedResourceParametersSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\EnqueuedResourcesSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/EnqueuedResourcesSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\GlobalVariablesOverrideSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/GlobalVariablesOverrideSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\I18nSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/I18nSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\PostsPerPageSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/PostsPerPageSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WP\\TimezoneChangeSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WP/TimezoneChangeSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WhiteSpace\\CastStructureSpacingSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WhiteSpace/CastStructureSpacingSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WhiteSpace\\ControlStructureSpacingSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WhiteSpace/ControlStructureSpacingSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WhiteSpace\\DisallowInlineTabsSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WhiteSpace/DisallowInlineTabsSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WhiteSpace\\OperatorSpacingSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WhiteSpace/OperatorSpacingSniff.php',
-        'WordPressCS\\WordPress\\Sniffs\\WhiteSpace\\PrecisionAlignmentSniff' => __DIR__ . '/..' . '/wp-coding-standards/wpcs/WordPress/Sniffs/WhiteSpace/PrecisionAlignmentSniff.php',
         'WordPressdotorg\\Plugin_Directory\\Readme\\Parser' => __DIR__ . '/..' . '/afragen/wordpress-plugin-readme-parser/class-parser.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit04c2eb7c50184d909493a055f6800f43::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit04c2eb7c50184d909493a055f6800f43::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit04c2eb7c50184d909493a055f6800f43::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit04c2eb7c50184d909493a055f6800f43::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9395179380f964c5be4198fe19201258::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9395179380f964c5be4198fe19201258::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9395179380f964c5be4198fe19201258::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9395179380f964c5be4198fe19201258::$classMap;
 
         }, null, ClassLoader::class);
     }

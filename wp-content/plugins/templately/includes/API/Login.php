@@ -85,7 +85,7 @@ class Login extends API {
             return $this->error( 'login_error', $errors, 'login', 400 );
         }
 
-        $query = 'status, message, user{ id, name, first_name, last_name, display_name, email, profile_photo, joined, is_verified, api_key, plan, plan_expire_at, my_cloud{ limit, usages, last_pushed }, favourites{ id, type }, show_notice }';
+        $query = 'status, message, user{ id, name, first_name, last_name, display_name, email, profile_photo, joined, is_verified, api_key, plan, plan_expire_at, my_cloud{ limit, usages, last_pushed }, favourites{ id, type }, show_notice, reviews{ type, type_id, rating } }';
 
         $response = $this->http()->mutation(
             $viaAPI ? 'connectWithApiKey' : 'connect',
@@ -125,6 +125,14 @@ class Login extends API {
             unset( $response['user']['favourites'] );
             $meta['favourites'] = $_favourites;
         }
+
+		if ( ! empty( $response['user']['reviews'] ) ) {
+			$_reviews = $this->utils( 'helper' )->normalizeReviews( $response['user']['reviews'] );
+			$this->utils( 'options' )->set( 'reviews', $_reviews );
+
+			unset( $response['user']['reviews'] );
+			$meta['reviews'] = $_reviews;
+		}
 
         $this->utils( 'options' )->set( 'user', $response['user'] );
         $response['user']['meta'] = $this->user_meta( $meta );
@@ -169,12 +177,14 @@ class Login extends API {
 		$this->utils( 'options' )
             ->remove( 'user' )
             ->remove( 'favourites' )
+            ->remove( 'reviews' )
             ->remove( 'cloud_activity' )
             ->remove( 'api_key' )
             ->remove( 'global_login' )
+            ->remove( 'total_download_counts' )
             ->remove( 'templates_in_clouds' );
 
-        if ( $this->utils( 'options' )->whoami() === 'global' ) {
+        if ( $this->utils( 'options' )->who_am_i() === 'global' ) {
             $this->utils( 'options' )->remove_global_login();
         }
 
@@ -192,7 +202,7 @@ class Login extends API {
 		return $global_user;
 	}
 
-    public static function is_signed() {
+    public static function is_signed(): array {
         $_response = [
             'status' => 'success'
         ];
@@ -212,13 +222,14 @@ class Login extends API {
         return $_response;
     }
 
-    public function user_meta( $meta = [] ) {
+    public function user_meta( $meta = [] ): array {
         $_meta = [
             'link_account'       => self::utils( 'options' )->link_account(),
             'unlink_account'     => self::utils( 'options' )->unlink_account(),
             'is_globally_signed' => Login::is_globally_signed(),
             'signed_as_global'   => Login::signed_as_global(),
             'starred'            => self::utils( 'options' )->get( 'favourites' ),
+            'reviews'            => self::utils( 'options' )->get( 'reviews' ),
             'cloud_activity'     => self::utils( 'options' )->get( 'cloud_activity' ),
             'has_api'            => rest_sanitize_boolean( self::utils( 'options' )->get( 'api_key' ) )
         ];
@@ -226,11 +237,11 @@ class Login extends API {
         return array_merge( $_meta, $meta );
     }
 
-    public static function is_globally_signed() {
+    public static function is_globally_signed(): bool {
         return rest_sanitize_boolean(  ( new static )->utils( 'options' )->is_globally_signed() );
     }
 
-    public static function signed_as_global() {
+    public static function signed_as_global(): bool {
         return rest_sanitize_boolean(  ( new static )->utils( 'options' )->signed_as_global() );
     }
 }

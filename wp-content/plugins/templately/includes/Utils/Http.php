@@ -155,17 +155,23 @@ class Http extends Base {
         }
 
         $_default_args = [
-            'timeout' => $this->dev_mode ? 40 : 15,
+            'timeout' => $this->dev_mode ? 40 : 30,
             'headers' => $headers,
             'body'    => wp_json_encode( [
                 'query' => $query
             ] )
         ];
 
-        $args     = wp_parse_args( $args, $_default_args );
-        $response = wp_remote_post( $this->url(), $args );
+        $retryCount = 0;
+        $maxRetries = defined('TEMPLATELY_HTTP_RETRY') ? TEMPLATELY_HTTP_RETRY : 3;
+        $args       = wp_parse_args( $args, $_default_args );
+        do {
+            $response = wp_remote_post( $this->url(), $args );
+            $retryCount++;
+        } while ( is_wp_error( $response ) && $retryCount < $maxRetries );
 
         if ( defined( 'TEMPLATELY_DEBUG_LOG' ) && TEMPLATELY_DEBUG_LOG ) {
+            Helper::log( 'Retry Count: ' . $retryCount );
             Helper::log( 'RAW RESPONSE: ' );
             Helper::log( $response );
             Helper::log( 'END RAW RESPONSE' );
@@ -224,17 +230,17 @@ class Http extends Base {
                     }
                 } );
 
-				if( $wp_error->get_error_code() === 'templately_graphql_error' ) {
-					if( $wp_error->get_error_message() == 'Unauthorized' ) {
-						$global_user = Login::get_instance()->delete();
+                if( $wp_error->get_error_code() === 'templately_graphql_error' ) {
+                    if( $wp_error->get_error_message() == 'Unauthorized' ) {
+                        $global_user = Login::get_instance()->delete();
 
-						return [
-							'redirect' => true,
-							'url' => 'sign-in',
-							'user' => $global_user,
-						];
-					}
-				}
+                        return [
+                            'redirect' => true,
+                            'url' => 'sign-in',
+                            'user' => $global_user,
+                        ];
+                    }
+                }
 
                 return $wp_error;
             }

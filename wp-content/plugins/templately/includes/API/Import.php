@@ -21,6 +21,7 @@ class Import extends API {
         $platform = $this->get_param( 'platform', 'elementor' );
         $origin   = $this->get_param( 'origin', 'remote' );
         $id       = $this->get_param( 'id', 0, 'intval' );
+        $postId   = $this->get_param( 'postId', 0, 'intval' );
 
         if( $id <= 0 || $id == null ) {
             return $this->error('invalid_item_id', __( 'Invalid ID is provided.', 'templately' ), 'get_content', 404 );
@@ -57,7 +58,7 @@ class Import extends API {
             );
         }
 
-        return $this->platform( $platform )->insert( $template_data );
+        return $this->platform( $platform )->insert( $template_data, $postId );
     }
 
     private function get_cloud_content( $id = null, $platform = 'elementor' ){

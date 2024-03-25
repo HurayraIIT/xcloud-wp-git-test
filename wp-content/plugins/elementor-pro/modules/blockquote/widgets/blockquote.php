@@ -114,6 +114,9 @@ class Blockquote extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'default' => esc_html__( 'John Doe', 'elementor-pro' ),
 				'separator' => 'after',
 			]
@@ -180,6 +183,9 @@ class Blockquote extends Base_Widget {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 			]
 		);
 
@@ -194,6 +200,9 @@ class Blockquote extends Base_Widget {
 				],
 				'dynamic' => [
 					'active' => true,
+				],
+				'ai' => [
+					'active' => false,
 				],
 			]
 		);
@@ -227,6 +236,9 @@ class Blockquote extends Base_Widget {
 						TagsModule::POST_META_CATEGORY,
 						TagsModule::URL_CATEGORY,
 					],
+				],
+				'ai' => [
+					'active' => false,
 				],
 				'placeholder' => esc_html__( 'https://your-link.com', 'elementor-pro' ),
 				'label_block' => true,
@@ -368,25 +380,16 @@ class Blockquote extends Base_Widget {
 					'{{WRAPPER}} .elementor-blockquote__tweet-button' => 'border-radius: {{SIZE}}{{UNIT}}',
 				],
 				'range' => [
+					'px' => [
+						'max' => 50,
+					],
 					'em' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
 					],
 					'rem' => [
 						'min' => 0,
 						'max' => 5,
-						'step' => 0.1,
-					],
-					'px' => [
-						'min' => 0,
-						'max' => 50,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
 					],
 				],
 			]
@@ -486,6 +489,21 @@ class Blockquote extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-blockquote__tweet-button:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .elementor-blockquote__tweet-button:hover svg' => 'fill: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 's', 'ms', 'custom' ],
+				'default' => [
+					'unit' => 'ms',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-blockquote__tweet-button' => 'transition-duration: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -617,6 +635,21 @@ class Blockquote extends Base_Widget {
 				'selectors' => [
 					'body:not(.rtl) {{WRAPPER}} .elementor-blockquote:hover' => 'padding-left: {{SIZE}}{{UNIT}}',
 					'body.rtl {{WRAPPER}} .elementor-blockquote:hover' => 'padding-right: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'border_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 's', 'ms', 'custom' ],
+				'default' => [
+					'unit' => 'ms',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-blockquote' => 'transition-duration: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -765,6 +798,21 @@ class Blockquote extends Base_Widget {
 					'box_shadow_position',
 				],
 				'selector' => '{{WRAPPER}} .elementor-blockquote:hover',
+			]
+		);
+
+		$this->add_control(
+			'box_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 's', 'ms', 'custom' ],
+				'default' => [
+					'unit' => 'ms',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-blockquote' => 'transition-duration: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 

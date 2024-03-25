@@ -352,7 +352,6 @@ class Loop extends Theme_Document {
 				'label_block' => true,
 				'show_label' => false,
 				'text' => esc_html__( 'Apply', 'elementor-pro' ),
-				'separator' => 'none',
 				'event' => 'elementorLoopBuilder:ApplySourceChange',
 			]
 		);
@@ -389,6 +388,14 @@ class Loop extends Theme_Document {
 					'px' => [
 						'min' => 200,
 						'max' => 1140,
+					],
+					'em' => [
+						'min' => 20,
+						'max' => 100,
+					],
+					'rem' => [
+						'min' => 20,
+						'max' => 100,
 					],
 				],
 				'selectors' => [

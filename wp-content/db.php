@@ -1,1 +1,1 @@
-/Users/hurayra/Local Sites/wpdev/app/public/wp-content/plugins/query-monitor/wp-content/db.php
+plugins/query-monitor/wp-content/db.php

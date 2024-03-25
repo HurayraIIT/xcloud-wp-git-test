@@ -194,7 +194,6 @@ class Media_Carousel extends Base {
 					'type' => 'image',
 					'image_link_to_type' => 'custom',
 				],
-				'separator' => 'none',
 				'show_label' => false,
 			]
 		);
@@ -451,6 +450,14 @@ class Media_Carousel extends Base {
 						'min' => 20,
 						'max' => 150,
 					],
+					'em' => [
+						'min' => 2,
+						'max' => 15,
+					],
+					'rem' => [
+						'min' => 2,
+						'max' => 15,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-custom-embed-play i' => 'font-size: {{SIZE}}{{UNIT}}',
@@ -621,6 +628,7 @@ class Media_Carousel extends Base {
 			[
 				'label' => esc_html__( 'Icon Size', 'elementor-pro' ),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-carousel-image-overlay' => '--e-carousel-image-overlay-icon-size: {{SIZE}}{{UNIT}};',
 				],

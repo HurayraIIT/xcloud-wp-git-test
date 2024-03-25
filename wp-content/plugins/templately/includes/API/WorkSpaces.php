@@ -98,7 +98,7 @@ class WorkSpaces extends API {
         $query_params = 'files{ total_page, current_page, data{ id, my_cloud_id, name, owner{ id }, last_modified } }';
 
         if ( $directLoad ) {
-            $query_params = 'id, name, slug, sharedWith{ id, name, profile_photo }, owner{ id, name, profile_photo }, pending_invitations,' . $query_params;
+            $query_params = 'id, name, slug, sharedWith{ id, name, email, profile_photo }, owner{ id, name, profile_photo }, pending_invitations,' . $query_params;
         }
 
         $response = $this->http()->query(

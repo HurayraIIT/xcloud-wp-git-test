@@ -32,4 +32,6 @@ class Database extends Base {
         $key = '_templately_' . trim( $key );
         return get_transient( $key );
     }
+
+
 }

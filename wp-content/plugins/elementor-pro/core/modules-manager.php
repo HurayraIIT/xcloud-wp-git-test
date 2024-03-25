@@ -32,6 +32,8 @@ final class Modules_Manager {
 			'admin-top-bar',
 			'notes',
 			'announcements',
+			'display-conditions',
+			'element-manager',
 
 			// Modules with Widgets.
 			'theme-builder',
@@ -68,6 +70,7 @@ final class Modules_Manager {
 			'mega-menu',
 			'nested-carousel',
 			'loop-filter',
+			'tiers',
 		];
 
 		foreach ( $modules as $module_name ) {

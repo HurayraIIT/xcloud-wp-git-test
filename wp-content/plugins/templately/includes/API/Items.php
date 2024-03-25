@@ -12,7 +12,7 @@ class Items extends API {
 		$this->request = $request;
 
 		$_route = $request->get_route();
-		if( $_route === '/templately/v1/items/favourite' ) {
+		if( $_route === '/templately/v1/items/favourite' || $_route === '/templately/v1/items/rating' ) {
 			return parent::permission_check( $request );
 		}
 
@@ -60,6 +60,7 @@ class Items extends API {
 		] );
 
 		$this->post( 'items/favourite', [ $this, 'set_favourite' ] );
+		$this->post( 'items/rating', [ $this, 'set_rating' ] );
 		$this->get( 'items-count', [ $this, 'get_counts' ] );
 		$this->get( 'featured-items', [ $this, 'featured_items' ] );
 	}
@@ -81,6 +82,7 @@ class Items extends API {
 		$plan_type        = $this->get_plan( $plan );
 		$platform         = $this->get_param( 'platform', 'elementor' );
 		$search           = $this->get_param( 'search' );
+		$include_search   = $this->get_param( 'include_search' );
 		$page             = $this->get_param( 'page', 1, 'intval' );
 		$per_page         = $this->get_param( 'per_page', 40, 'intval' );
 		$template_type_id = $this->get_param( 'template_type_id', 0, 'intval' );
@@ -116,7 +118,11 @@ class Items extends API {
 			$funcArgs['search'] = $search;
 		}
 
-		$query = 'total_page, current_page, data { id, name, price, rating, downloads, type, template_type{ slug }, slug, favourite_count, thumbnail, thumbnail2, thumbnail3 }';
+		if ( ! empty( $include_search ) ) {
+			$funcArgs['include_search'] = $include_search;
+		}
+
+		$query = 'total_page, current_page, data { id, fullsite_import, name, price, rating, downloads, type, template_type{ slug }, slug, favourite_count, thumbnail, thumbnail2, thumbnail3 }';
 		if( $type !== 'packs' ) {
 			$query = 'total_page, current_page, data { id, name, price, rating, downloads, type, template_type{ slug }, slug, favourite_count, dependencies{ id, name, icon, plugin_file, plugin_original_slug, is_pro, link }, thumbnail }';
 		}
@@ -151,10 +157,10 @@ class Items extends API {
 		}
 
 		$items_params = 'id, name, rating, type, description, slug, price, features, favourite_count, thumbnail, downloads, categories{ id, name, slug }, dependencies{ id, name, icon, plugin_file, plugin_original_slug, is_pro, link }, tags{ name, id }, categories{ name, id }, screenshots{ url }, banner, pack{ id, name, slug, items{ id, price, name, type, slug, thumbnail } }, live_url, template_type{ id, name, slug }';
-		$params       = 'data { ' . $items_params . ' }';
+		$params       = 'data { ' . $items_params . ', variations { name, slug, type, platform } }';
 
 		if ( $type == 'packs' ) {
-			$params = 'data { id, name, rating, type, slug, live_url, price, features, favourite_count, thumbnail, downloads, categories{ id, name, slug }, items { ' . $items_params . ' } }';
+			$params = 'data { id, fullsite_import, name, rating, type, slug, live_url, price, features, favourite_count, thumbnail, downloads, categories{ id, name, slug }, items { ' . $items_params . ' }, variations { name, slug, type, platform } }';
 		}
 
 		$response = $this->http()->query( $type, $params, [ 'slug' => $slug ] )->post();
@@ -283,6 +289,54 @@ class Items extends API {
 		}
 
 		return $_response;
+	}
+
+	public function set_rating(){
+		$type_id  = $this->get_param( 'type_id', 0, 'intval' );
+		$itemType = $this->get_param( 'itemType', 'pack' );
+		$rating   = $this->get_param( 'rating', 5, 'intval' );
+
+		$query = 'status, message, data';
+
+		$funcArgs = [
+			'api_key' => $this->api_key,
+			'type_id' => $type_id,
+			'type'    => $itemType,
+			'rating'  => $rating,
+		];
+
+		$response = $this->http()->mutation(
+			'review',
+			$query,
+			$funcArgs
+		)->post();
+
+		if( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		if( empty( $response['data'] ) ) {
+			return $this->error(
+				'invalid_response',
+				__('Something went wrong.', 'templately'),
+				'/items\/rating',
+				'404'
+			);
+		}
+
+		if( ! empty( $response['data'] ) && $response['status'] === 'success' ) {
+			$response['data'] = json_decode( $response['data'], true );
+
+			$_ratings = $this->utils('options')->get('reviews', []);
+			// $_reviews = $this->utils( 'helper' )->normalizeReviews( $response['user']['reviews'] );
+			$_ratings[ $itemType ][ $type_id ] = $rating;
+			$this->utils('options')->set('reviews', $_ratings);
+
+			$_ratings[ $itemType ][ "avg_$type_id" ] = (float) $response['data']['avg_rating'];
+			$response['data']['reviews'] = $_ratings;
+		}
+
+		return $response;
 	}
 
 	public function get_counts(){

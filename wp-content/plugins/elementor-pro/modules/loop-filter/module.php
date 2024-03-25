@@ -4,23 +4,30 @@ namespace ElementorPro\Modules\LoopFilter;
 use Elementor\Core\Experiments\Manager;
 use ElementorPro\Base\Module_Base;
 use ElementorPro\Core\Utils;
+use ElementorPro\Modules\LoopFilter\Query\Taxonomy_Query_Builder;
+use ElementorPro\Modules\LoopFilter\Query\Data\Query_Constants;
 use ElementorPro\Modules\LoopFilter\Data\Controller;
 use ElementorPro\Plugin;
+use ElementorPro\Modules\LoopFilter\Traits\Hierarchical_Taxonomy_Trait;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 class Module extends Module_Base {
+	use Hierarchical_Taxonomy_Trait;
 
 	const EXPERIMENT_NAME = 'taxonomy-filter';
+	private $operator;
+	private $taxonomy;
+	private $query;
 
 	/**
 	 * @var array Array of widgets containing each widget's filters which are tied to the current session.
 	 */
 	private $filters = [];
 
-	protected function get_widgets(): array {
+	protected function get_widgets() {
 		return [ 'Taxonomy_Filter' ];
 	}
 
@@ -46,14 +53,18 @@ class Module extends Module_Base {
 				'<a href="https://go.elementor.com/wp-dash-taxonomy-filter/" target="_blank">',
 				'</a>'
 			),
-			'release_status' => Manager::RELEASE_STATUS_ALPHA,
+			'release_status' => Manager::RELEASE_STATUS_BETA,
 			'default' => Manager::STATE_INACTIVE,
+			'new_site' => [
+				'default_active' => true,
+				'minimum_installation_version' => '3.20',
+			],
 		];
 
 		return $experiment_data;
 	}
 
-	public function get_post_type_taxonomies( array $data ): array {
+	public function get_post_type_taxonomies( $data ) {
 		if ( ! current_user_can( 'edit_posts' ) || empty( $data['post_type'] ) ) {
 			return [];
 		}
@@ -85,7 +96,7 @@ class Module extends Module_Base {
 		}
 	}
 
-	public function filter_loop_query( $query_args, $widget ): array {
+	public function filter_loop_query( $query_args, $widget ) {
 		$widget_id = $widget->get_id();
 
 		if ( empty( $this->filters[ $widget_id ] ) ) {
@@ -96,33 +107,45 @@ class Module extends Module_Base {
 		$filter_types = $this->filters[ $widget_id ];
 
 		// TODO: This part is non-generic and should be refactored to allow for multiple types of filters.
-		$query_args['tax_query']['relation'] = 'AND';
+		$query_args['tax_query']['relation'] = $this->query['AND']['relation'];
 
 		foreach ( $filter_types as $filters ) {
 			// The $filters array contains all filters of a specific type. For example, for the taxonomy filter type,
 			// it would contain all taxonomies to be filtered - e.g. 'category', 'tag', 'product-cat', etc.
+			$tax_query = [];
+
 			foreach ( $filters as $filter_taxonomy => $filter ) {
-				// Sanitize request data.
-				$taxonomy = sanitize_key( $filter_taxonomy );
-				$terms = [];
-
-				foreach ( $filter as $term ) {
-					$terms[] = sanitize_title( $term );
-				}
-
-				if ( empty( $terms ) ) {
+				if ( 'logicalJoin' === $filter_taxonomy ) {
 					continue;
 				}
 
-				$query_args['tax_query'][] = [
-					'taxonomy' => $taxonomy,
-					'field' => 'slug',
-					'terms' => $terms,
-				];
+				if ( $this->is_filter_empty( $filter ) ) {
+					continue;
+				}
+
+				// Sanitize request data.
+				$taxonomy = sanitize_key( $filter_taxonomy );
+				( new Taxonomy_Query_Builder() )->get_merged_queries( $tax_query, $taxonomy, $filter );
 			}
 		}
 
+		$query_args['tax_query'] = array_merge( $query_args['tax_query'], $tax_query ?? [] );
+
 		return $query_args;
+	}
+
+	/**
+	 * @description Check if the filter is empty.
+	 * Taxonomy Filter URL parameter is empty but not removed i.e. `&e-filter-389c132-product_cat=`.
+	 * This edge case happens if a user clears terms and not the Taxonomy filter parameter
+	 * @param $filter
+	 * @return bool
+	 */
+	public function is_filter_empty( $filter ) {
+		if ( '' === $filter['terms'][0] ) {
+			return true;
+		}
+		return false;
 	}
 
 	public function add_localize_data( $config ) {
@@ -150,7 +173,7 @@ class Module extends Module_Base {
 		return apply_filters( 'elementor/query/get_query_args/current_query', $current_query_vars );
 	}
 
-	private function parse_query_string( $param_key ): array {
+	private function parse_query_string( $param_key ) {
 		// Check if the query param is a filter. match a regex for `e-filter-14f9e1d-post_tag` where `14f9e1d` is the widget ID and must be 7 characters long and have only letters and numbers, then followed by a string that can only have letters, numbers, dashes and underscores.
 		if ( ! preg_match( '/^e-filter-[a-z0-9]{7}-[a-z0-9_\-]+$/', $param_key ) ) {
 			return [];
@@ -183,6 +206,7 @@ class Module extends Module_Base {
 			return;
 		}
 
+		$query_params = [];
 		wp_parse_str( htmlspecialchars_decode( Utils::_unstable_get_super_global_value( $_SERVER, 'QUERY_STRING' ) ), $query_params );
 
 		foreach ( $query_params as $param_key => $param_value ) {
@@ -193,7 +217,8 @@ class Module extends Module_Base {
 				continue;
 			}
 
-			$terms = explode( ',', $param_value );
+			$terms = $this->get_terms_array_from_params( $param_value );
+			$logical_join = $this->get_logical_join_from_params( $param_value );
 
 			if ( empty( $terms ) ) {
 				continue;
@@ -201,7 +226,10 @@ class Module extends Module_Base {
 
 			$filter_data = [
 				'taxonomy' => [
-					$parsed_query_string['taxonomy'] => $terms,
+					$parsed_query_string['taxonomy'] => [
+						'terms' => $terms,
+						'logicalJoin' => $logical_join,
+					],
 				],
 			];
 
@@ -209,13 +237,42 @@ class Module extends Module_Base {
 		}
 	}
 
+	private function get_seperator_from_params( $param_value ) {
+		$separator = $this->query['AND']['separator']['from-browser']; // The web browser automatically replaces the plus sign with a space character before sending the data to the server.
+
+		if ( strstr( $param_value, $this->query['OR']['separator']['from-browser'] ) ) {
+			$separator = $this->query['OR']['separator']['from-browser'];
+			$this->operator = $this->query['OR']['operator'];
+		}
+		return $separator;
+	}
+
+	private function get_terms_array_from_params( $param_value ) {
+		$separator = $this->get_seperator_from_params( $param_value );
+		return explode( $separator, $param_value );
+	}
+
+	private function get_logical_join_from_params( $param_value ) {
+		$separator = $this->get_seperator_from_params( $param_value );
+
+		foreach ( $this->query as $index => $data ) {
+			if ( $data['separator']['decoded'] === $separator ) {
+				return $index; // Return the index when the decoded separator is found
+			}
+		}
+
+		return 'AND'; // Default logical join
+	}
+
+	/**
+	 * @return array
+	 */
 	public function get_query_string_filters() {
 		return $this->filters;
 	}
 
 	public function remove_rest_route_parameter( $link ) {
-		$link = remove_query_arg( 'rest_route', $link );
-		return $link;
+		return remove_query_arg( 'rest_route', $link );
 	}
 
 	/**
@@ -319,6 +376,8 @@ class Module extends Module_Base {
 
 	public function __construct() {
 		parent::__construct();
+
+		$this->query = Query_Constants::DATA;
 
 		if ( ! empty( $_SERVER['QUERY_STRING'] ) ) {
 			$this->maybe_populate_filters_from_query_string();

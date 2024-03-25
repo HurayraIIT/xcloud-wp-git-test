@@ -38,7 +38,7 @@ class Elementor extends Platform {
 		if ( class_exists( '\Elementor\Plugin' ) ) {
 			add_action( 'elementor/preview/enqueue_styles', [ $this, 'styles' ] );
 			add_action( 'elementor/editor/before_enqueue_styles', [ $this, 'styles' ] );
-			add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'scripts' ] );
+			add_action( 'elementor/editor/after_enqueue_scripts', [ $this, 'scripts' ] );
 		}
 	}
 
@@ -56,7 +56,7 @@ class Elementor extends Platform {
 	 */
 	public function scripts() {
 		templately()->assets->enqueue( 'templately-elementor', 'css/elementor.css' );
-		templately()->assets->enqueue( 'templately-elementor', 'js/elementor.js', [ 'jquery' ] );
+		templately()->assets->enqueue( 'templately-elementor', 'js/elementor.js', [ 'jquery' ], true );
 		templately()->admin->scripts( 'elementor' );
 	}
 

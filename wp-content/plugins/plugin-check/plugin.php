@@ -1,107 +1,82 @@
 <?php
 /**
- * Plugin Name: Plugin Check
- * Plugin URI: https://github.com/10up/plugin-check/
- * Description: Runs checks against a plugin to verify the latest WordPress standards and practices.
- * Author: Plugin Review Team
- * Version: 0.2.1
+ * Plugin Name: Plugin Check (PCP)
+ * Plugin URI: https://github.com/WordPress/plugin-check
+ * Description: Plugin Check is a WordPress.org tool which provides checks to help plugins meet the directory requirements and follow various best practices.
+ * Requires at least: 6.3
+ * Requires PHP: 7.0
+ * Version: 1.0.1
+ * Author: WordPress Performance Team and Plugin Review Team
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * Text Domain: plugin-check
- * License: GPLv2
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @package plugin-check
  */
 
-namespace WordPressdotorg\Plugin_Check;
-use WordPressdotorg\Plugin_Directory\Readme\Parser as Readme_Parser;
+use WordPress\Plugin_Check\Plugin_Main;
 
-const PLUGIN_DIR = __DIR__;
+define( 'WP_PLUGIN_CHECK_VERSION', '1.0.1' );
+define( 'WP_PLUGIN_CHECK_MINIMUM_PHP', '7.0' );
+define( 'WP_PLUGIN_CHECK_MAIN_FILE', __FILE__ );
+define( 'WP_PLUGIN_CHECK_PLUGIN_DIR_PATH', plugin_dir_path( WP_PLUGIN_CHECK_MAIN_FILE ) );
+define( 'WP_PLUGIN_CHECK_PLUGIN_DIR_URL', plugin_dir_url( WP_PLUGIN_CHECK_MAIN_FILE ) );
 
 /**
- * The current version of the plugin.
+ * Checks basic requirements and loads the plugin.
  *
  * @since 1.0.0
+ */
+function wp_plugin_check_load() {
+	// Check for supported PHP version.
+	if ( version_compare( phpversion(), WP_PLUGIN_CHECK_MINIMUM_PHP, '<' ) ) {
+		add_action( 'admin_notices', 'wp_plugin_check_display_php_version_notice' );
+		return;
+	}
+
+	// Check Composer autoloader exists.
+	if ( ! file_exists( WP_PLUGIN_CHECK_PLUGIN_DIR_PATH . 'vendor/autoload.php' ) ) {
+		add_action( 'admin_notices', 'wp_plugin_check_display_composer_autoload_notice' );
+		return;
+	}
+
+	// Load the Composer autoloader.
+	require_once WP_PLUGIN_CHECK_PLUGIN_DIR_PATH . 'vendor/autoload.php';
+
+	// Setup the plugin.
+	$instance = new Plugin_Main( WP_PLUGIN_CHECK_MAIN_FILE );
+	$instance->add_hooks();
+}
+
+/**
+ * Displays admin notice about unmet PHP version requirement.
  *
- * @var string
+ * @since 1.0.0
  */
-const PLUGIN_CHECK_VERSION = '0.2.1';
-
-include __DIR__ . '/export.php';
-include __DIR__ . '/message.php';
-include __DIR__ . '/checks/check-base.php';
-
-define(
-	__NAMESPACE__ . '\HAS_VENDOR',
-	file_exists( __DIR__ . '/vendor/autoload.php' )
-);
-if ( HAS_VENDOR ) {
-	include __DIR__ . '/vendor/autoload.php';
-}
-
-/**
- * Load the Administration UI.
- */
-add_action( 'admin_menu', function() {
-	require __DIR__ . '/admin/admin.php';
-}, 1 );
-
-/**
- * Run all checks against a plugin.
- */
-function run_all_checks( $args ) {
-	if ( is_string( $args ) ) {
-		$args = [
-			'path' => $args
-		];
-	}
-
-	$args = wp_parse_args(
-		$args,
-		[
-			'path'        => '',
-			'slug'        => '',
-			'readme'      => false,
-			'headers'     => false,
-			'plugin_file' => false,
-			'files'       => [],
-		]
+function wp_plugin_check_display_php_version_notice() {
+	echo '<div class="notice notice-error"><p>';
+	printf(
+		/* translators: 1: required version, 2: currently used version */
+		esc_html__( 'Plugin Check requires at least PHP version %1$s. Your site is currently running on PHP %2$s.', 'plugin-check' ),
+		esc_html( WP_PLUGIN_CHECK_MINIMUM_PHP ),
+		esc_html( phpversion() )
 	);
-
-	$args['path'] = trailingslashit( $args['path'] );
-	$args['slug'] = $args['slug'] ?: basename( $args['path'] );
-
-	$top_level_files = glob( $args['path'] . '*' );
-
-	if ( ! $args['headers'] ) {
-		$php_files = preg_grep( '!\.php$!i', $top_level_files );
-		foreach ( $php_files as $plugin_file ) {
-			$file_headers = get_plugin_data( $plugin_file, false, false );
-
-			if ( ! empty( $file_headers['Name'] ) ) {
-				$args['headers']     = $file_headers;
-				$args['plugin_file'] = $plugin_file;
-				break;
-			}
-		}
-	}
-
-	if ( ! $args['readme'] ) {
-		$readme_txt = preg_grep( '!(^|/)readme.txt$!i', $top_level_files );
-		$readme_md  = preg_grep( '!(^|/)readme.md$!i', $top_level_files );
-		if ( ! empty( $readme_txt ) ) {
-			$args['readme'] = new Readme_Parser( end( $readme_txt ) );
-		} elseif ( ! empty( $readme_md ) ) {
-			$args['readme'] = new Readme_Parser( end( $readme_md ) );
-		}
-	}
-
-	if ( ! $args['files'] ) {
-		$args['files'] = [];
-		foreach ( new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $args['path'] ) ) as $file ) {
-			if ( $file->isFile() ) {
-				$args['files'][] = substr( $file->getPathname(), strlen( $args['path'] ) );
-			}
-		}
-		sort( $args['files'] );
-	}
-
-	return Checks\Check_Base::run_checks( $args ) ?: true;
+	echo '</p></div>';
 }
+
+/**
+ * Displays admin notice about missing Composer autoload files.
+ *
+ * @since 1.0.0
+ */
+function wp_plugin_check_display_composer_autoload_notice() {
+	echo '<div class="notice notice-error"><p>';
+	printf(
+		/* translators: composer command. */
+		esc_html__( 'Your installation of the Plugin Check plugin is incomplete. Please run %s.', 'plugin-check' ),
+		'<code>composer install</code>'
+	);
+	echo '</p></div>';
+}
+
+wp_plugin_check_load();

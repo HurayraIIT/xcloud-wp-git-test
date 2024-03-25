@@ -186,23 +186,6 @@
 .e-con.elementor-sticky--active {
   z-index: var(--z-index, 99);
 }
-.e-con .e-con.elementor-sticky {
-  /* Fix for sticky effect inside containers */
-}
-.e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-left);
-  --bc-padding-inline-end: var(--padding-right);
-  padding-inline-start: var(--bc-padding-inline-start, var(--padding-inline-start));
-  padding-inline-end: var(--bc-padding-inline-end, var(--padding-inline-end));
-}
-[dir=rtl] .e-con .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: var(--padding-right);
-  --bc-padding-inline-end: var(--padding-left);
-}
-.e-con[data-core-v316-plus=true] .e-con.elementor-sticky--active {
-  --bc-padding-inline-start: initial;
-  --bc-padding-inline-end: initial;
-}
 
 [data-elementor-type=popup]:not(.elementor-edit-area) {
   display: none;
@@ -3921,7 +3904,10 @@ body.elementor-default .elementor-widget-woocommerce-menu-cart.elementor-menu-ca
 .elementor-widget-woocommerce-notices .e-woocommerce-notices-wrapper.e-woocommerce-notices-wrapper-loading * {
   display: none;
 }
-.elementor-widget-woocommerce-notices .woocommerce-notices-wrapper, .elementor-widget-woocommerce-notices .woocommerce-message, .elementor-widget-woocommerce-notices .woocommerce-error, .elementor-widget-woocommerce-notices .woocommerce-info {
+.elementor-widget-woocommerce-notices .woocommerce-notices-wrapper, .elementor-widget-woocommerce-notices .woocommerce-message, .elementor-widget-woocommerce-notices .woocommerce-error, .elementor-widget-woocommerce-notices .woocommerce-info,
+.elementor-widget-woocommerce-notices .woocommerce .is-success,
+.elementor-widget-woocommerce-notices .woocommerce .is-error,
+.elementor-widget-woocommerce-notices .woocommerce .is-info {
   display: block;
 }
 .e-preview--show-hidden-elements:not(.elementor-editor-active) .elementor-widget-woocommerce-notices .e-notices-demo-notice {
@@ -4002,7 +3988,7 @@ body.elementor-default .elementor-widget-woocommerce-menu-cart.elementor-menu-ca
   justify-content: space-between;
 }
 .elementor-post-navigation .elementor-post-navigation__link {
-  width: calc(50% - ( 1px / 2 ));
+  width: calc(50% - 1px / 2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4931,6 +4917,10 @@ the source property is coming from element/dev/scss...
 
 .elementor-field-type-html {
   display: inline-block;
+}
+
+.elementor-field-type-tel input {
+  direction: inherit;
 }
 
 .elementor-login .elementor-remember-me,
@@ -6009,6 +5999,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_telegram, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_telegram {
   background-color: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_threads, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_threads {
+  background-color: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_twitter {
   background-color: #1DA1F2;
 }
@@ -6023,6 +6016,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_wordpress, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_wordpress {
   background-color: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_x-twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_x-twitter {
+  background-color: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-flat .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-gradient .elementor-share-btn_xing {
   background-color: #026466;
@@ -6135,6 +6131,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_telegram svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_telegram svg {
   fill: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_threads, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads {
+  color: #000000;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_threads svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads svg {
+  fill: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_twitter {
   color: #1DA1F2;
 }
@@ -6164,6 +6166,12 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_wordpress svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_wordpress svg {
   fill: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_x-twitter, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter {
+  color: #000000;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_x-twitter svg, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter svg {
+  fill: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-framed .elementor-share-btn_xing, .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_xing {
   color: #026466;
@@ -6225,6 +6233,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_telegram .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_telegram .elementor-share-btn__icon {
   background-color: #2CA5E0;
 }
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_threads .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_threads .elementor-share-btn__icon {
+  background-color: #000000;
+}
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_twitter .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_twitter .elementor-share-btn__icon {
   background-color: #1DA1F2;
 }
@@ -6239,6 +6250,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_wordpress .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_wordpress .elementor-share-btn__icon {
   background-color: #21759b;
+}
+.elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_x-twitter .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_x-twitter .elementor-share-btn__icon {
+  background-color: #000000;
 }
 .elementor-share-buttons--color-official.elementor-share-buttons--skin-boxed .elementor-share-btn_xing .elementor-share-btn__icon, .elementor-share-buttons--color-official.elementor-share-buttons--skin-minimal .elementor-share-btn_xing .elementor-share-btn__icon {
   background-color: #026466;
@@ -6560,10 +6574,10 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   transform: translateX(-50%) scaleX(0.75) rotate(45deg);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_above.elementor-testimonial--align-left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_stacked.elementor-testimonial--align-left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_inline.elementor-testimonial--align-left .elementor-testimonial__content:after {
-  left: calc( 20px + ( 50px / 2 ) );
+  left: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_above.elementor-testimonial--align-right .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_stacked.elementor-testimonial--align-right .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_inline.elementor-testimonial--align-right .elementor-testimonial__content:after {
-  right: calc( 20px + ( 50px / 2 ) );
+  right: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__content:after {
   transform: scaleY(0.75) rotate(135deg);
@@ -6574,7 +6588,7 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   right: -8px;
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__content:after, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_right .elementor-testimonial__content:after {
-  top: calc(20px + (50px / 2));
+  top: calc(20px + 50px / 2);
 }
 .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_left .elementor-testimonial__footer, .elementor-testimonial--skin-bubble.elementor-testimonial--layout-image_right .elementor-testimonial__footer {
   padding-top: 20px;
@@ -6818,11 +6832,11 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
   height: 36px;
 }
 .elementor-widget-reviews .elementor-testimonial__icon {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 17px;
 }
 .elementor-widget-reviews .elementor-testimonial__icon .fa + .fa {
-  margin-left: 0.15em;
+  margin-inline-start: 0.15em;
 }
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon {
   color: var(--e-testimonial-icon-color);
@@ -6938,6 +6952,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-thumb-tack, .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-thumbtack {
   --e-testimonial-icon-color: #1aa1d8;
 }
+.elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-threads {
+  --e-testimonial-icon-color: #000000;
+}
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-tripadvisor {
   --e-testimonial-icon-color: #589442;
 }
@@ -6968,6 +6985,9 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-wordpress {
   --e-testimonial-icon-color: #21759b;
 }
+.elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-x {
+  --e-testimonial-icon-color: #000000;
+}
 .elementor-widget-reviews .elementor-testimonial__icon.elementor-icon-xing {
   --e-testimonial-icon-color: #026466;
 }
@@ -6989,28 +7009,28 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 }
 .elementor-widget-reviews .elementor-testimonial__header {
   display: flex;
-  padding-top: 15px;
-  padding-bottom: 6px;
+  padding-block-start: 15px;
+  padding-block-end: 6px;
 }
 .elementor-widget-reviews .elementor-testimonial__image + cite {
-  margin-left: 9px;
+  margin-inline-start: 9px;
 }
 .elementor-widget-reviews .elementor-testimonial__separator {
   margin: 0 auto;
-  border-top: 0 none;
-  border-bottom: 1px solid #e1e8ed;
+  border-block-start: 0 none;
+  border-block-end: 1px solid #e1e8ed;
   height: 0;
 }
 .elementor-widget-reviews .elementor-testimonial__content {
-  padding-top: 6px;
-  padding-bottom: 15px;
+  padding-block-start: 6px;
+  padding-block-end: 15px;
 }
 .elementor-widget-reviews .elementor-testimonial__content, .elementor-widget-reviews .elementor-testimonial__header {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-inline-start: 15px;
+  padding-inline-end: 15px;
 }
 .elementor-widget-reviews.elementor-review--has-separator .elementor-testimonial__header {
-  border-bottom: 1px solid #e1e8ed;
+  border-block-end: 1px solid #e1e8ed;
 }
 
 .swiper-pagination-bullets {
@@ -7099,7 +7119,7 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-next, .elementor-widget-testimonial-carousel.elementor-pagination-type-bullets .elementor-swiper-button-prev,
 .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-next,
 .elementor-widget-reviews.elementor-pagination-type-bullets .elementor-swiper-button-prev {
-  top: calc(50% - ( 40px / 2 ));
+  top: calc(50% - 40px / 2);
 }
 
 .elementor-widget-media-carousel .elementor-swiper-button-prev,
@@ -8436,9 +8456,23 @@ body.rtl .elementor-widget-slides .elementor-swiper-button-prev {
 .elementor-nav-menu__align-left .elementor-nav-menu--layout-vertical > ul > li > a {
   justify-content: flex-start;
 }
+.elementor-nav-menu__align-start .elementor-nav-menu {
+  margin-inline-end: auto;
+  justify-content: flex-start;
+}
+.elementor-nav-menu__align-start .elementor-nav-menu--layout-vertical > ul > li > a {
+  justify-content: flex-start;
+}
+.elementor-nav-menu__align-end .elementor-nav-menu {
+  margin-inline-start: auto;
+  justify-content: flex-end;
+}
+.elementor-nav-menu__align-end .elementor-nav-menu--layout-vertical > ul > li > a {
+  justify-content: flex-end;
+}
 .elementor-nav-menu__align-center .elementor-nav-menu {
-  margin-left: auto;
-  margin-right: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
   justify-content: center;
 }
 .elementor-nav-menu__align-center .elementor-nav-menu--layout-vertical > ul > li > a {
@@ -8921,6 +8955,7 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
   font-size: 18px;
   margin: 0;
   color: var(--header-color);
+  flex-grow: 1;
 }
 .elementor-toc__toggle-button {
   cursor: pointer;
@@ -8971,6 +9006,9 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
   margin-top: 0.5em;
   margin-left: var(--nested-list-indent, 1em);
 }
+.elementor-toc__list-item-text {
+  transition-duration: var(--item-text-transition-duration);
+}
 .elementor-toc__list-item-text:hover {
   color: var(--item-text-hover-color);
   text-decoration: var(--item-text-hover-decoration);
@@ -9014,6 +9052,7 @@ a.elementor-item.elementor-gallery-title.elementor-item-active {
 .elementor-toc__body .elementor-toc__list-item-text {
   color: var(--item-text-color);
   text-decoration: var(--item-text-decoration);
+  transition-duration: var(--item-text-transition-duration);
 }
 .elementor-toc__body .elementor-toc__list-item-text:hover {
   color: var(--item-text-hover-color);
@@ -9920,6 +9959,12 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   cursor: pointer;
   position: relative;
 }
+.elementor-widget-loop-grid .e-loop-nothing-found-message {
+  text-align: var(--e-loop-nothing-found-message-align, center);
+  padding-block-start: var(--e-loop-nothing-found-message-space-from-top, 30px);
+  padding-block-end: var(--e-loop-nothing-found-message-space-from-bottom, 30px);
+  color: var(--e-loop-nothing-found-message-color, #1f2124);
+}
 
 .elementor-loop-container.elementor-posts-masonry {
   align-items: flex-start;
@@ -10163,6 +10208,13 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   --n-menu-icon-align-items: center;
   --n-menu-icon-order: initial;
   --n-menu-icon-gap: 5px;
+  --n-menu-dropdown-icon-gap: 5px;
+  --n-menu-dropdown-indicator-size: initial;
+  --n-menu-dropdown-indicator-rotate: initial;
+  --n-menu-dropdown-indicator-space: initial;
+  --n-menu-dropdown-indicator-color-normal: initial;
+  --n-menu-dropdown-indicator-color-hover: initial;
+  --n-menu-dropdown-indicator-color-active: initial;
   --n-menu-dropdown-content-max-width: initial;
   --n-menu-dropdown-content-box-border-color: #ffffff;
   --n-menu-dropdown-content-box-border-inline-start-width: medium;
@@ -10270,6 +10322,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   white-space: nowrap;
   user-select: none;
   margin: initial;
+  gap: var(--n-menu-dropdown-indicator-space);
 }
 .elementor-widget-n-menu .e-n-menu-title.e-click, .elementor-widget-n-menu .e-n-menu-title.e-click * {
   cursor: pointer;
@@ -10278,6 +10331,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   display: flex;
   flex-direction: var(--n-menu-title-direction);
   align-items: var(--n-menu-title-align-items);
+  align-self: var(--n-menu-icon-align-items);
   gap: var(--n-menu-icon-gap);
   justify-content: var(--n-menu-title-justify-content);
 }
@@ -10285,6 +10339,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   display: flex;
   align-items: center;
   font-size: var(--n-menu-title-font-size);
+  line-height: var(--n-menu-title-line-height);
   transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title-text.e-link {
@@ -10324,18 +10379,20 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   align-self: var(--n-menu-icon-align-items);
   justify-content: center;
   flex-direction: column;
-  overflow: hidden;
   position: relative;
   width: fit-content;
+  margin-inline-start: var(--n-menu-dropdown-icon-gap);
+  transition: all var(--n-menu-title-transition);
+  transform: var(--n-menu-dropdown-indicator-rotate);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon span i {
-  font-size: var(--n-menu-title-font-size);
-  width: var(--n-menu-title-font-size);
+  font-size: var(--n-menu-dropdown-indicator-size, var(--n-menu-title-font-size));
+  width: var(--n-menu-dropdown-indicator-size, var(--n-menu-title-font-size));
   transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon span svg {
-  width: var(--n-menu-title-font-size);
-  height: var(--n-menu-title-font-size);
+  width: var(--n-menu-dropdown-indicator-size, var(--n-menu-title-font-size));
+  height: var(--n-menu-dropdown-indicator-size, var(--n-menu-title-font-size));
   transition: all var(--n-menu-title-transition);
 }
 .elementor-widget-n-menu .e-n-menu-title .e-n-menu-dropdown-icon[aria-expanded=false] .e-n-menu-dropdown-icon-opened {
@@ -10358,6 +10415,12 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 }
 .elementor-widget-n-menu .e-n-menu-title:not(.e-current):not(:hover) .e-n-menu-icon svg {
   fill: var(--n-menu-icon-color);
+}
+.elementor-widget-n-menu .e-n-menu-title:not(.e-current):not(:hover) .e-n-menu-dropdown-icon i {
+  color: var(--n-menu-dropdown-indicator-color-normal, var(--n-menu-title-color-normal));
+}
+.elementor-widget-n-menu .e-n-menu-title:not(.e-current):not(:hover) .e-n-menu-dropdown-icon svg {
+  fill: var(--n-menu-dropdown-indicator-color-normal, var(--n-menu-title-color-normal));
 }
 .elementor-widget-n-menu .e-n-menu-title:not(.e-current) .icon-active {
   transform: translate(0, -100%);
@@ -10382,6 +10445,12 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 .elementor-widget-n-menu .e-n-menu-title.e-current .e-n-menu-icon span > svg {
   fill: var(--n-menu-icon-color-active);
 }
+.elementor-widget-n-menu .e-n-menu-title.e-current .e-n-menu-dropdown-icon i {
+  color: var(--n-menu-dropdown-indicator-color-active, var(--n-menu-title-color-active));
+}
+.elementor-widget-n-menu .e-n-menu-title.e-current .e-n-menu-dropdown-icon svg {
+  fill: var(--n-menu-dropdown-indicator-color-active, var(--n-menu-title-color-active));
+}
 .elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-title-text:not(.e-link) {
   cursor: default;
 }
@@ -10399,6 +10468,12 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
 }
 .elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-icon svg {
   fill: var(--n-menu-icon-color-hover);
+}
+.elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-dropdown-icon i {
+  color: var(--n-menu-dropdown-indicator-color-hover, var(--n-menu-title-color-hover));
+}
+.elementor-widget-n-menu .e-n-menu-title:hover:not(.e-current) .e-n-menu-dropdown-icon svg {
+  fill: var(--n-menu-dropdown-indicator-color-hover, var(--n-menu-title-color-hover));
 }
 .elementor-widget-n-menu .e-n-menu-toggle {
   all: unset;
@@ -10522,17 +10597,20 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   color: var(--n-menu-title-normal-color-dropdown);
 }
 .elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title:not(.e-current) .e-n-menu-dropdown-icon i {
-  color: var(--n-menu-title-normal-color-dropdown);
+  color: var(--n-menu-dropdown-indicator-color-normal, var(--n-menu-title-normal-color-dropdown));
 }
 .elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title:not(.e-current) .e-n-menu-dropdown-icon svg {
-  fill: var(--n-menu-title-normal-color-dropdown);
+  fill: var(--n-menu-dropdown-indicator-color-normal, var(--n-menu-title-normal-color-dropdown));
 }
 .elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title.e-current,
 .elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title.e-current a {
   color: var(--n-menu-title-active-color-dropdown);
 }
-.elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title.e-current .e-n-menu-dropdown-icon span svg {
-  fill: var(--n-menu-title-active-color-dropdown);
+.elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title.e-current .e-n-menu-dropdown-icon i {
+  color: var(--n-menu-dropdown-indicator-color-active, var(--n-menu-title-active-color-dropdown));
+}
+.elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-title.e-current .e-n-menu-dropdown-icon svg {
+  fill: var(--n-menu-dropdown-indicator-color-active, var(--n-menu-title-active-color-dropdown));
 }
 .elementor-widget-n-menu .e-n-menu[data-layout=dropdown] .e-n-menu-content {
   overflow: hidden;
@@ -10640,7 +10718,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   --flex-grow: var(--container-widget-flex-grow);
 }
 
-.elementor-widget-n-menu .e-n-menu:not(.e-core-315) .e-n-menu-content > .e-con {
+[data-core-v316-plus=true] .elementor-widget-n-menu .e-n-menu .e-n-menu-content > .e-con {
   --padding-top: initial;
   --padding-right: initial;
   --padding-bottom: initial;
@@ -10817,7 +10895,7 @@ ol.elementor-toc__list-wrapper .elementor-toc__list-item-text-wrapper:before {
   max-width: calc((100% - var(--e-n-carousel-gaps-width-total)) / var(--e-n-carousel-swiper-slides-to-display, 1));
 }
 
-.elementor-widget-n-carousel .e-n-carousel:not(.e-core-315) .swiper-slide > .e-con {
+[data-core-v316-plus=true] .elementor-widget-n-carousel .e-n-carousel .swiper-slide > .e-con {
   --padding-top: initial;
   --padding-right: initial;
   --padding-bottom: initial;

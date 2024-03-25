@@ -167,7 +167,6 @@ class Flip_Box extends Base_Widget {
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 				'placeholder' => esc_html__( 'Enter your description', 'elementor-pro' ),
-				'separator' => 'none',
 				'dynamic' => [
 					'active' => true,
 				],
@@ -292,7 +291,6 @@ class Flip_Box extends Base_Widget {
 				'type' => Controls_Manager::TEXTAREA,
 				'default' => esc_html__( 'Lorem ipsum dolor sit amet consectetur adipiscing elit dolor', 'elementor-pro' ),
 				'placeholder' => esc_html__( 'Enter your description', 'elementor-pro' ),
-				'separator' => 'none',
 				'dynamic' => [
 					'active' => true,
 				],
@@ -474,6 +472,14 @@ class Flip_Box extends Base_Widget {
 						'min' => 100,
 						'max' => 1000,
 					],
+					'em' => [
+						'min' => 10,
+						'max' => 100,
+					],
+					'rem' => [
+						'min' => 10,
+						'max' => 100,
+					],
 					'vh' => [
 						'min' => 10,
 						'max' => 100,
@@ -494,8 +500,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
 					],
 				],
 				'separator' => 'after',
@@ -683,8 +694,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -764,8 +780,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 200,
+					],
+					'em' => [
+						'max' => 20,
+					],
+					'rem' => [
+						'max' => 20,
 					],
 				],
 				'selectors' => [
@@ -797,8 +818,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -857,6 +883,14 @@ class Flip_Box extends Base_Widget {
 					'px' => [
 						'min' => 6,
 						'max' => 300,
+					],
+					'em' => [
+						'min' => 0.6,
+						'max' => 30,
+					],
+					'rem' => [
+						'min' => 0.6,
+						'max' => 30,
 					],
 				],
 				'selectors' => [
@@ -923,6 +957,9 @@ class Flip_Box extends Base_Widget {
 					'em' => [
 						'max' => 2,
 					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-icon' => 'border-width: {{SIZE}}{{UNIT}}',
@@ -970,8 +1007,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -1171,8 +1213,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -1241,8 +1288,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [
@@ -1348,6 +1400,9 @@ class Flip_Box extends Base_Widget {
 				'selectors' => [
 					'{{WRAPPER}} .elementor-flip-box__button' => 'color: {{VALUE}};',
 				],
+				'condition' => [
+					'button_text!' => '',
+				],
 			]
 		);
 
@@ -1363,6 +1418,9 @@ class Flip_Box extends Base_Widget {
 						'default' => 'classic',
 					],
 				],
+				'condition' => [
+					'button_text!' => '',
+				],
 			]
 		);
 
@@ -1373,6 +1431,9 @@ class Flip_Box extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-flip-box__button' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_text!' => '',
 				],
 			]
 		);
@@ -1386,6 +1447,9 @@ class Flip_Box extends Base_Widget {
 				'condition' => [
 					'button_text!' => '',
 				],
+				'condition' => [
+					'button_text!' => '',
+				],
 			]
 		);
 
@@ -1396,6 +1460,9 @@ class Flip_Box extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-flip-box__button:hover' => 'color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_text!' => '',
 				],
 			]
 		);
@@ -1412,6 +1479,9 @@ class Flip_Box extends Base_Widget {
 						'default' => 'classic',
 					],
 				],
+				'condition' => [
+					'button_text!' => '',
+				],
 			]
 		);
 
@@ -1422,6 +1492,24 @@ class Flip_Box extends Base_Widget {
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .elementor-flip-box__button:hover' => 'border-color: {{VALUE}};',
+				],
+				'condition' => [
+					'button_text!' => '',
+				],
+			]
+		);
+
+		$this->add_control(
+			'button_hover_transition_duration',
+			[
+				'label' => esc_html__( 'Transition Duration', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 's', 'ms', 'custom' ],
+				'default' => [
+					'unit' => 'ms',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-flip-box__button' => 'transition-duration: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1443,6 +1531,9 @@ class Flip_Box extends Base_Widget {
 					'em' => [
 						'max' => 2,
 					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'selectors' => [
 					'{{WRAPPER}} .elementor-flip-box__button' => 'border-width: {{SIZE}}{{UNIT}};',
@@ -1462,8 +1553,13 @@ class Flip_Box extends Base_Widget {
 				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 				],
 				'selectors' => [

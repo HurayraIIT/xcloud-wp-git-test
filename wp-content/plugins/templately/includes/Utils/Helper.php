@@ -152,6 +152,21 @@ class Helper extends Base {
 		return $_favourites;
 	}
 
+	public function normalizeReviews( $favourites, $_favourites = [], $undo = false ){
+		array_map( function( $item ) use ( &$_favourites) {
+			if( ! is_null( $item ) ) {
+				$item = (array) $item;
+				if ( !isset( $_favourites[ $item['type'] ] ) ){
+					$_favourites[ $item['type'] ] = [];
+				}
+				$_favourites[ $item['type'] ][$item['type_id']] = $item['rating'];
+			}
+			return $_favourites;
+		}, $favourites );
+
+		return $_favourites;
+	}
+
 	/**
 	 * Trigger Error
 	 *
@@ -173,7 +188,7 @@ class Helper extends Base {
 	 * @return void
 	 */
 	public static function log( $log ){
-		if ( WP_DEBUG_LOG === true ) {
+		if ( defined('WP_DEBUG_LOG') && WP_DEBUG_LOG === true ) {
 			if ( is_array( $log ) || is_object( $log ) ) {
 				error_log( print_r( $log, true ) );
 			} else {

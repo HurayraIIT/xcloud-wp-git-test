@@ -1,4 +1,4 @@
-/*! elementor - v3.17.0 - 25-10-2023 */
+/*! elementor - v3.20.0 - 20-03-2024 */
 "use strict";
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["frontend"],{
 
@@ -277,13 +277,13 @@ class Frontend extends elementorModules.ViewModule {
     this.config = elementorFrontendConfig;
     this.config.legacyMode = {
       /**
-       * @deprecated since 3.1.0, use `elementorFrontend.config.experimentalFeatures.e_dom_optimization` instead.
+       * @deprecated since 3.1.0
        */
       get elementWrappers() {
         if (elementorFrontend.isEditMode()) {
-          window.top.elementorDevTools.deprecation.deprecated('elementorFrontend.config.legacyMode.elementWrappers', '3.1.0', 'elementorFrontend.config.experimentalFeatures.e_dom_optimization');
+          window.top.elementorDevTools.deprecation.deprecated('elementorFrontend.config.legacyMode.elementWrappers', '3.1.0');
         }
-        return !elementorFrontend.config.experimentalFeatures.e_dom_optimization;
+        return false;
       }
     };
     this.populateActiveBreakpointsConfig();
@@ -857,7 +857,7 @@ class BackgroundVideo extends elementorModules.frontend.handlers.Base {
         width: videoSize.width,
         autoplay: true,
         loop: !elementSettings.background_play_once,
-        transparent: false,
+        transparent: true,
         background: true,
         muted: true
       };

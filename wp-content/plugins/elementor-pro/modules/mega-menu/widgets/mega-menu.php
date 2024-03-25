@@ -233,6 +233,9 @@ class Mega_Menu extends Widget_Nested_Base {
 				'dynamic' => [
 					'active' => true,
 				],
+				'ai' => [
+					'active' => false,
+				],
 				'title' => esc_html__( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-pro' ),
 				'style_transfer' => false,
 			]
@@ -517,12 +520,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'unit' => 'ms',
 					'size' => 500,
 				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
-				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-open-animation-duration: {{SIZE}}{{UNIT}}',
 				],
@@ -629,12 +626,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'unit' => 'ms',
 					'size' => 500,
 				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
-				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-toggle-icon-wrapper-animation-duration: {{SIZE}}{{UNIT}}',
 				],
@@ -724,8 +715,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		];
 
 		$excluded_breakpoints = [
-			'laptop',
-			'tablet_extra',
 			'widescreen',
 		];
 
@@ -767,11 +756,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'menu_item_title_space_between', [
 			'label' => esc_html__( 'Space between Items', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
-			'size_units' => [ 'px' ],
+			'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 200,
+				],
+				'em' => [
+					'max' => 20,
+				],
+				'rem' => [
+					'max' => 20,
 				],
 			],
 			'default' => [
@@ -788,12 +782,13 @@ class Mega_Menu extends Widget_Nested_Base {
 			'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 200,
 				],
-				'%' => [
-					'min' => 0,
-					'max' => 100,
+				'em' => [
+					'max' => 20,
+				],
+				'rem' => [
+					'max' => 20,
 				],
 			],
 			'default' => [
@@ -950,6 +945,12 @@ class Mega_Menu extends Widget_Nested_Base {
 						'min' => 1,
 						'max' => 20,
 					],
+					'em' => [
+						'max' => 2,
+					],
+					'rem' => [
+						'max' => 2,
+					],
 				],
 				'condition' => $divider_condition,
 				'selectors' => [
@@ -968,6 +969,12 @@ class Mega_Menu extends Widget_Nested_Base {
 					'px' => [
 						'min' => 1,
 						'max' => 100,
+					],
+					'em' => [
+						'max' => 10,
+					],
+					'rem' => [
+						'max' => 10,
 					],
 					'%' => [
 						'min' => 1,
@@ -1084,12 +1091,6 @@ class Mega_Menu extends Widget_Nested_Base {
 				'size_units' => [ 's', 'ms', 'custom' ],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-title-transition: {{SIZE}}{{UNIT}}',
-				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
 				],
 				'default' => [
 					'unit' => 'ms',
@@ -1253,18 +1254,15 @@ class Mega_Menu extends Widget_Nested_Base {
 			'type' => Controls_Manager::SLIDER,
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 100,
 				],
 				'em' => [
 					'min' => 0,
 					'max' => 10,
-					'step' => 0.1,
 				],
 				'rem' => [
 					'min' => 0,
 					'max' => 10,
-					'step' => 0.1,
 				],
 			],
 			'default' => [
@@ -1280,10 +1278,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'icon_spacing', [
 			'label' => esc_html__( 'Spacing', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
+			'size_units' => [ 'px', 'em', 'rem', 'vw', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 400,
+				],
+				'em' => [
+					'max' => 40,
+				],
+				'rem' => [
+					'max' => 40,
 				],
 				'vw' => [
 					'min' => 0,
@@ -1291,10 +1295,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'step' => 0.1,
 				],
 			],
-			'default' => [
-				'unit' => 'px',
-			],
-			'size_units' => [ 'px', 'vw' ],
 			'selectors' => [
 				'{{WRAPPER}}' => '--n-menu-icon-gap: {{SIZE}}{{UNIT}}',
 			],
@@ -1357,6 +1357,81 @@ class Mega_Menu extends Widget_Nested_Base {
 
 		$this->end_controls_section();
 
+		$this->start_controls_section( 'section_dropdown_indicator_style', [
+			'label' => esc_html__( 'Dropdown Indicator', 'elementor-pro' ),
+			'tab' => Controls_Manager::TAB_STYLE,
+			'conditions' => [
+				'relation' => 'or',
+				'terms' => [
+					[
+						'name' => 'menu_item_icon[value]',
+						'operator' => '!==',
+						'value' => '',
+					],
+					[
+						'name' => 'menu_item_icon_active[value]',
+						'operator' => '!==',
+						'value' => '',
+					],
+				],
+			],
+		] );
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_size',
+			[
+				'label' => esc_html__( 'Size', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-size: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_rotate',
+			[
+				'label' => esc_html__( 'Rotate', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'deg', 'grad', 'rad', 'turn', 'custom' ],
+				'default' => [
+					'unit' => 'deg',
+				],
+				'tablet_default' => [
+					'unit' => 'deg',
+				],
+				'mobile_default' => [
+					'unit' => 'deg',
+				],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-rotate: rotate({{SIZE}}{{UNIT}})',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'style_dropdown_indicator_space',
+			[
+				'label' => esc_html__( 'Space', 'elementor-pro' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em', 'rem', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}}' => '--n-menu-dropdown-indicator-space: {{SIZE}}{{UNIT}}',
+				],
+			]
+		);
+
+		$this->start_controls_tabs( 'style_menu_dropdown_indicator' );
+
+		foreach ( array( 'normal', 'hover', 'active' ) as $state ) {
+			$this->add_dropdown_indicator_state_based_style_controls( $state );
+		}
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
 		$this->start_controls_section( 'section_menu_toggle_style', [
 			'label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
 			'tab' => Controls_Manager::TAB_STYLE,
@@ -1381,24 +1456,13 @@ class Mega_Menu extends Widget_Nested_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 0,
 						'max' => 200,
-						'step' => 1,
-					],
-					'%' => [
-						'min' => 0,
-						'max' => 100,
-						'step' => 1,
 					],
 					'em' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 0.1,
+						'max' => 20,
 					],
 					'rem' => [
-						'min' => 0,
-						'max' => 10,
-						'step' => 0.1,
+						'max' => 20,
 					],
 				],
 				'selectors' => [
@@ -1531,12 +1595,6 @@ class Mega_Menu extends Widget_Nested_Base {
 					'unit' => 'ms',
 					'size' => 500,
 				],
-				'range' => [
-					'ms' => [
-						'min' => 0,
-						'max' => 3000,
-					],
-				],
 				'selectors' => [
 					'{{WRAPPER}}' => '--n-menu-toggle-icon-hover-duration: {{SIZE}}{{UNIT}}',
 				],
@@ -1632,10 +1690,16 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_responsive_control( 'menu_toggle_icon_distance_from_dropdown', [
 			'label' => esc_html__( 'Distance from dropdown', 'elementor-pro' ),
 			'type' => Controls_Manager::SLIDER,
+			'size_units' => [ 'px', 'em', 'rem', 'custom' ],
 			'range' => [
 				'px' => [
-					'min' => 0,
 					'max' => 100,
+				],
+				'em' => [
+					'max' => 10,
+				],
+				'rem' => [
+					'max' => 10,
 				],
 			],
 			'default' => [
@@ -1644,7 +1708,6 @@ class Mega_Menu extends Widget_Nested_Base {
 			'placeholder' => [
 				'size' => 0,
 			],
-			'size_units' => [ 'px' ],
 			'selectors' => [
 				'{{WRAPPER}}' => '--n-menu-toggle-icon-distance-from-dropdown: {{SIZE}}{{UNIT}}',
 			],
@@ -1708,10 +1771,6 @@ class Mega_Menu extends Widget_Nested_Base {
 			]
 		);
 
-		// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
-		// Remove together with support for physical properties inside the container widget.
-		$padding_physical_properties = '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};';
-
 		$this->add_responsive_control(
 			'content_padding',
 			[
@@ -1719,7 +1778,10 @@ class Mega_Menu extends Widget_Nested_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%', 'em', 'rem', 'vw', 'custom' ],
 				'selectors' => [
-					$this->get_control_selector_class( 'active_content_container' ) => "$padding_physical_properties --padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
+					$this->get_control_selector_class( 'active_content_container' ) => '--padding-top: {{TOP}}{{UNIT}}; --padding-right: {{RIGHT}}{{UNIT}}; --padding-bottom: {{BOTTOM}}{{UNIT}}; --padding-left: {{LEFT}}{{UNIT}};',
+					// Todo: Remove in version 3.21.0: https://elementor.atlassian.net/browse/ED-11888.
+					// Remove together with support for physical properties inside the container widget.
+					':where( [data-core-v316-plus="true"] .elementor-element.elementor-widget-n-menu > .elementor-widget-container > .e-n-menu > .e-n-menu-wrapper > .e-n-menu-content ) > .e-con' => "--padding-block-start: {{TOP}}{{UNIT}}; --padding-inline-end: $logical_dimensions_inline_end; --padding-block-end: {{BOTTOM}}{{UNIT}}; --padding-inline-start: $logical_dimensions_inline_start;",
 				],
 				'separator' => 'before',
 			]
@@ -1911,13 +1973,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->end_controls_section();
 	}
 
-	// TODO: Remove this function in version 3.19.
-	protected function widget_number(): string {
-		return method_exists( $this, 'get_widget_number' )
-			? $this->get_widget_number()
-			: substr( $this->get_id_int(), 0, 3 );
-	}
-
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$menu_titles = '';
@@ -1927,7 +1982,7 @@ class Mega_Menu extends Widget_Nested_Base {
 			$menu_titles .= $this->render_menu_titles_html( $index, $item );
 
 			ob_start();
-			$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->widget_number() . ( $index + 1 );
+			$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->get_widget_number() . ( $index + 1 );
 			$this->print_child( $index, 'yes' === $item['item_dropdown_content'], $item_dropdown_id );
 			$menu_containers .= ob_get_clean();
 		}
@@ -1936,7 +1991,7 @@ class Mega_Menu extends Widget_Nested_Base {
 		<nav <?php $this->render_menu_attributes(); ?>>
 			<?php $this->render_menu_toggle( $settings ); ?>
 			<div <?php $this->render_menu_wrapper_attributes(); ?>>
-				<ul class="e-n-menu-heading" role="menubar">
+				<ul class="e-n-menu-heading">
 					<?php echo $menu_titles; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</ul>
 				<div class="e-n-menu-content">
@@ -1948,17 +2003,10 @@ class Mega_Menu extends Widget_Nested_Base {
 	}
 
 	protected function render_menu_attributes( $element_uid = '' ) {
-		$menu_classes = [ 'e-n-menu' ];
-		$core_version_class = $this->get_core_version_css_class();
-
-		if ( ! empty( $core_version_class ) ) {
-			$menu_classes[] = $core_version_class;
-		}
-
 		$this->add_render_attribute( 'e-n-menu', [
-			'class' => $menu_classes,
-			'data-widget-number' => ! empty( $element_uid ) ? $element_uid : $this->widget_number(),
-			'aria-label' => esc_html__( 'Menu | Open (Enter or Space) | Return (Escape) | Other Menu Items (Arrow, Home & End Keys)', 'elementor-pro' ),
+			'class' => [ 'e-n-menu' ],
+			'data-widget-number' => ! empty( $element_uid ) ? $element_uid : $this->get_widget_number(),
+			'aria-label' => esc_html__( 'Menu', 'elementor-pro' ),
 		] );
 
 		$this->print_render_attribute_string( 'e-n-menu' );
@@ -1967,8 +2015,8 @@ class Mega_Menu extends Widget_Nested_Base {
 	protected function render_menu_wrapper_attributes() {
 		$this->add_render_attribute( 'e-n-menu-wrapper', [
 			'class' => 'e-n-menu-wrapper',
-			'id' => 'menubar-' . $this->widget_number(),
-			'aria-labelledby' => 'menu-toggle-' . $this->widget_number(),
+			'id' => 'menubar-' . $this->get_widget_number(),
+			'aria-labelledby' => 'menu-toggle-' . $this->get_widget_number(),
 		] );
 
 		$this->print_render_attribute_string( 'e-n-menu-wrapper' );
@@ -1979,43 +2027,36 @@ class Mega_Menu extends Widget_Nested_Base {
 			? ' elementor-animation-' . $settings['menu_toggle_icon_hover_animation']
 			: '';
 
-		$menu_toggle_class = 'e-n-menu-toggle' . $menu_toggle_hover_animation;
-
 		$this->add_render_attribute( 'menu-toggle', [
-			'class' => $menu_toggle_class,
-			'id' => 'menu-toggle-' . $this->widget_number(),
+			'class' => 'e-n-menu-toggle' . $menu_toggle_hover_animation,
+			'id' => 'menu-toggle-' . $this->get_widget_number(),
 			'aria-haspopup' => 'true',
 			'aria-expanded' => 'false',
-			'aria-controls' => 'menubar-' . $this->widget_number(),
-			'aria-label' => esc_html__( 'Menu Toggle | Open (Enter or Space) | Return (Escape)', 'elementor-pro' ),
+			'aria-controls' => 'menubar-' . $this->get_widget_number(),
+			'aria-label' => esc_html__( 'Menu Toggle', 'elementor-pro' ),
 		] );
+
+		$open_class = 'e-n-menu-toggle-icon e-open';
+		$close_class = 'e-n-menu-toggle-icon e-close';
+
+		$normal_icon = ! empty( $settings['menu_toggle_icon_normal']['value'] )
+			? $settings['menu_toggle_icon_normal']
+			: [
+				'library' => 'eicons',
+				'value' => 'eicon-menu-bar',
+			];
+
+		$active_icon = ! empty( $settings['menu_toggle_icon_active']['value'] )
+			? $settings['menu_toggle_icon_active']
+			: [
+				'library' => 'eicons',
+				'value' => 'eicon-close',
+			];
 		?>
 		<button <?php $this->print_render_attribute_string( 'menu-toggle' ); ?>>
-			<?php
-			$open_class = 'e-n-menu-toggle-icon e-open';
-			$close_class = 'e-n-menu-toggle-icon e-close';
-
-			$normal_icon = ! empty( $settings['menu_toggle_icon_normal']['value'] )
-				? $settings['menu_toggle_icon_normal']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-menu-bar',
-				];
-
-			?>
 			<span class="<?php echo esc_attr( $open_class ); ?>">
 				<?php Icons_Manager::render_icon( $normal_icon ); ?>
 			</span>
-			<?php
-
-			$active_icon = ! empty( $settings['menu_toggle_icon_active']['value'] )
-				? $settings['menu_toggle_icon_active']
-				: [
-					'library' => 'eicons',
-					'value' => 'eicon-close',
-				];
-
-			?>
 			<span class="<?php echo esc_attr( $close_class ); ?>">
 				<?php Icons_Manager::render_icon( $active_icon ); ?>
 			</span>
@@ -2041,7 +2082,7 @@ class Mega_Menu extends Widget_Nested_Base {
 					'aria-haspopup': 'true',
 					'aria-expanded': 'false',
 					'aria-controls': 'menubar-' + elementUid,
-					'aria-label': '<?php echo esc_html__( 'Menu Toggle | Open (Enter or Space) | Return (Escape)', 'elementor-pro' ); ?>',
+					'aria-label': '<?php echo esc_html__( 'Menu Toggle', 'elementor-pro' ); ?>',
 				} );
 			#>
 			<button {{{ view.getRenderAttributeString( menuToggleKey ) }}}>
@@ -2102,8 +2143,8 @@ class Mega_Menu extends Widget_Nested_Base {
 		$icon_active_html = Icons_Manager::try_get_icon_html( $settings['menu_item_icon_active'], [ 'aria-hidden' => 'true' ] );
 		$display_index = $index + 1;
 		$has_dropdown_content = 'yes' === $settings['menu_items'][ $index ]['item_dropdown_content'];
-		$menu_item_id = empty( $item['element_id'] ) ? 'e-n-menu-title-' . $this->widget_number() . $display_index : $item['element_id'];
-		$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->widget_number() . $display_index;
+		$menu_item_id = empty( $item['element_id'] ) ? 'e-n-menu-title-' . $this->get_widget_number() . $display_index : $item['element_id'];
+		$item_dropdown_id = 'e-n-menu-dropdown-icon-' . $this->get_widget_number() . $display_index;
 		$key = $this->get_repeater_setting_key( 'item_title', 'menu_items', $display_index );
 		$menu_item = $settings['menu_items'][ $index ];
 		$menu_item_icon = Icons_Manager::try_get_icon_html( $menu_item['item_icon'], [ 'aria-hidden' => 'true' ] );
@@ -2125,19 +2166,25 @@ class Mega_Menu extends Widget_Nested_Base {
 					<?php if ( $menu_item_icon ) { ?>
 						<span class="e-n-menu-icon">
 							<span class="icon-active"><?php echo $menu_item_active_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-							<span class="icon-inactive" ><?php echo $menu_item_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+							<span class="icon-inactive"><?php echo $menu_item_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						</span>
 					<?php } ?>
 					<?php echo $this->get_title_link_opening_tag( $item, $item['item_link']['url'], $display_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php echo $item['item_title']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php echo $this->get_title_link_closing_tag( $item['item_link']['url'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					<?php if ( $has_dropdown_content ) { ?>
-						<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
-							<span class="e-n-menu-dropdown-icon-opened" ><?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-							<span class="e-n-menu-dropdown-icon-closed"><?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						</button>
-					<?php } ?>
 				</div>
+				<?php if ( $has_dropdown_content ) { ?>
+					<button <?php echo wp_kses_post( $this->get_render_attribute_string( $key . '_link' ) ); ?> >
+						<span class="e-n-menu-dropdown-icon-opened">
+							<?php echo $icon_active_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span class="elementor-screen-only"><?php printf( esc_html__( 'Close %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</span>
+						<span class="e-n-menu-dropdown-icon-closed">
+							<?php echo $icon_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<span class="elementor-screen-only"><?php printf( esc_html__( 'Open %s', 'elementor-pro' ), $item['item_title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						</span>
+					</button>
+				<?php } ?>
 			</li>
 		<?php
 		return ob_get_clean();
@@ -2147,7 +2194,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_render_attribute( $key, [
 			'id' => $menu_item_id,
 			'class' => $classes,
-			'role' => 'presentation',
 			'style' => '--n-menu-title-order: ' . $display_index . ';',
 		] );
 	}
@@ -2156,13 +2202,10 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->add_render_attribute( $key, [
 			'id' => $item_dropdown_id,
 			'class' => $classes,
-			'role' => 'button',
 			'data-tab-index' => $display_index,
-			'tabindex' => 1 === $display_index ? '0' : '-1',
 			'aria-haspopup' => $has_dropdown_content ? 'true' : 'false',
 			'aria-expanded' => 'false',
-			'aria-controls' => 'e-n-menu-content-' . $this->widget_number() . $display_index,
-			'aria-label' => esc_html__( 'Expand: ', 'elementor-pro' ) . $title,
+			'aria-controls' => 'e-n-menu-content-' . $this->get_widget_number() . $display_index,
 		] );
 	}
 
@@ -2221,8 +2264,7 @@ class Mega_Menu extends Widget_Nested_Base {
 
 	protected function set_container_attributes( $container, $menu_index, $menu_item_id ) {
 		$container->add_render_attribute( '_wrapper', [
-			'id' => 'e-n-menu-content-' . $this->widget_number() . $menu_index,
-			'role' => 'menu',
+			'id' => 'e-n-menu-content-' . $this->get_widget_number() . $menu_index,
 			'data-tab-index' => $menu_index,
 			'aria-labelledby' => $menu_item_id,
 			'style' => '--n-menu-title-order: ' . $menu_index . ';',
@@ -2264,8 +2306,6 @@ class Mega_Menu extends Widget_Nested_Base {
 		$this->remove_render_attribute( $link_id );
 		$this->add_render_attribute( $link_id, [
 			'class' => $link_classes,
-			'tabindex' => 1 === $display_index ? '0' : '-1',
-			'role' => 'menuitem',
 		] );
 		$this->add_link_attributes( $link_id, $item['item_link'] );
 
@@ -2298,6 +2338,40 @@ class Mega_Menu extends Widget_Nested_Base {
 		return array_key_exists( 'item_icon_active', $item ) && ! empty( $item['item_icon_active'] ) && ! empty( $item['item_icon_active']['value'] );
 	}
 
+	/**
+	 * @param string $state
+	 * @param $css_prefix
+	 * @return void
+	 */
+	private function add_dropdown_indicator_state_based_style_controls( string $state ) {
+		$label = esc_html__( 'Normal', 'elementor-pro' );
+		$selector = '--n-menu-dropdown-indicator-color-normal: {{VALUE}};';
+		if ( 'hover' === $state ) {
+			$label = esc_html__( 'Hover', 'elementor-pro' );
+			$selector = '--n-menu-dropdown-indicator-color-hover: {{VALUE}};';
+		}
+		if ( 'active' === $state ) {
+			$label = esc_html__( 'Active', 'elementor-pro' );
+			$selector = '--n-menu-dropdown-indicator-color-active: {{VALUE}};';
+		}
+		$this->start_controls_tab('style_menu_dropdown_indicator_' . $state, [
+			'label' => $label,
+		]);
+
+		$this->add_control(
+			'menu_dropdown_indicator_color_' . $state,
+			[
+				'label' => esc_html__( 'Color', 'elementor-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}}' => $selector,
+				],
+			]
+		);
+
+		$this->end_controls_tab();
+	}
+
 	protected function content_template() {
 		?>
 		<# if ( settings['menu_items'] ) {
@@ -2309,7 +2383,7 @@ class Mega_Menu extends Widget_Nested_Base {
 		<nav <?php $this->render_menu_attributes( '{{ elementUid }}' ); ?>>
 			<?php $this->render_menu_toggle_template(); ?>
 			<div <?php $this->render_menu_wrapper_attributes(); ?>>
-				<ul class="e-n-menu-heading" role="menubar">
+				<ul class="e-n-menu-heading">
 					<# _.each( settings['menu_items'], function( item, index ) {
 						const menuItemCount = index + 1,
 							menuItemUid = elementUid + menuItemCount,
@@ -2348,7 +2422,6 @@ class Mega_Menu extends Widget_Nested_Base {
 						view.addRenderAttribute( menuItemWrapperKey, {
 							'id': menuItemId,
 							'class': menuItemClassList,
-							'role': 'presentation',
 							'style': '--n-menu-title-order: ' + menuItemCount + ';',
 						} );
 
@@ -2361,8 +2434,7 @@ class Mega_Menu extends Widget_Nested_Base {
 
 						view.addRenderAttribute( menuItemTitleKey, {
 							'class': menuItemLinkClasses,
-							'role': !! item.item_link.url ? 'menuitem' : 'none',
-							'tabindex': 1 === menuItemCount ? '0' : '-1',
+							'href': item.item_link.url,
 							'data-binding-type': 'repeater-item',
 							'data-binding-repeater-name': 'menu_items',
 							'data-binding-setting': ['item_title'],
@@ -2377,13 +2449,10 @@ class Mega_Menu extends Widget_Nested_Base {
 						view.addRenderAttribute( menuItemDropdownIconKey, {
 							'id': 'e-n-menu-dropdown-icon-' + menuItemUid,
 							'class': [ 'e-n-menu-dropdown-icon', 'e-focus' ],
-							'role': 'button',
 							'data-tab-index': menuItemCount,
-							'tabindex': 1 === menuItemCount ? '0' : '-1',
 							'aria-haspopup': hasDropdownContent ? 'true' : 'false',
 							'aria-expanded': 'false',
 							'aria-controls': 'e-n-menu-content-' + menuItemUid,
-							'aria-label': '<?php echo esc_html__( 'Expand: ', 'elementor-pro' ); ?>' + item.item_title,
 						} );
 					#>
 
@@ -2412,8 +2481,14 @@ class Mega_Menu extends Widget_Nested_Base {
 
 						<# if ( hasDropdownContent ) { #>
 							<button {{{ view.getRenderAttributeString( menuItemDropdownIconKey ) }}}>
-								<span class="e-n-menu-dropdown-icon-closed">{{{ menuItemIcon.value }}}</span>
-								<span class="e-n-menu-dropdown-icon-opened">{{{  menuItemIconActive.value }}}</span>
+								<span class="e-n-menu-dropdown-icon-opened">
+									{{{ menuItemIconActive.value }}}
+									<span class="elementor-screen-only"><?php echo esc_html__( 'Close ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+								</span>
+								<span class="e-n-menu-dropdown-icon-closed">
+									{{{ menuItemIcon.value }}}
+									<span class="elementor-screen-only"><?php echo esc_html__( 'Open ', 'elementor-pro' ); ?>{{{ item.item_title }}}</span>
+								</span>
 							</button>
 						<# } #>
 					</li>

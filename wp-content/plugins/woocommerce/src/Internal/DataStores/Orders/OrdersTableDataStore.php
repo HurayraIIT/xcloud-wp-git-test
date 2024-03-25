@@ -7,6 +7,7 @@ namespace Automattic\WooCommerce\Internal\DataStores\Orders;
 
 use Automattic\Jetpack\Constants;
 use Automattic\WooCommerce\Caches\OrderCache;
+use Automattic\WooCommerce\Internal\Admin\Orders\EditLock;
 use Automattic\WooCommerce\Internal\Utilities\DatabaseUtil;
 use Automattic\WooCommerce\Proxies\LegacyProxy;
 use Automattic\WooCommerce\Utilities\ArrayUtil;
@@ -25,7 +26,7 @@ class OrdersTableDataStore extends \Abstract_WC_Order_Data_Store_CPT implements 
 	/**
 	 * Order IDs for which we are checking sync on read in the current request. In WooCommerce, using wc_get_order is a very common pattern, to avoid performance issues, we only sync on read once per request per order. This works because we consider out of sync orders to be an anomaly, so we don't recommend running HPOS with incompatible plugins.
 	 *
-	 * @var array.
+	 * @var array
 	 */
 	private static $reading_order_ids = array();
 
@@ -94,6 +95,15 @@ class OrdersTableDataStore extends \Abstract_WC_Order_Data_Store_CPT implements 
 		'_download_permissions_granted',
 		'_order_stock_reduced',
 		'_new_order_email_sent',
+	);
+
+	/**
+	 * Meta keys that are considered ephemereal and do not trigger a full save (updating modified date) when changed.
+	 *
+	 * @var string[]
+	 */
+	protected $ephemeral_meta_keys = array(
+		EditLock::META_KEY_NAME,
 	);
 
 	/**
@@ -608,6 +618,15 @@ class OrdersTableDataStore extends \Abstract_WC_Order_Data_Store_CPT implements 
 			}
 		}
 		self::$backfilling_order_ids = array_diff( self::$backfilling_order_ids, array( $order->get_id() ) );
+
+		/**
+		 * Fired when the backing post record for an HPOS order is backfilled after an order update.
+		 *
+		 * @since 8.5.0
+		 *
+		 * @param \WC_Order $order The order object.
+		 */
+		do_action( 'woocommerce_hpos_post_record_backfilled', $order );
 	}
 
 	/**
@@ -968,10 +987,24 @@ WHERE
 	/**
 	 * Get unpaid orders last updated before the specified date.
 	 *
-	 * @param  int $date Timestamp.
-	 * @return array
+	 * @param  int $date This timestamp is expected in the timezone in WordPress settings for legacy reason, even though it's not a good practice.
+	 *
+	 * @return array Array of order IDs.
 	 */
 	public function get_unpaid_orders( $date ) {
+		$timezone_offset = wc_timezone_offset();
+		$gmt_timestamp   = $date - $timezone_offset;
+		return $this->get_unpaid_orders_gmt( absint( $gmt_timestamp ) );
+	}
+
+	/**
+	 * Get unpaid orders last updated before the specified GMT date.
+	 *
+	 * @param int $gmt_timestamp GMT timestamp.
+	 *
+	 * @return array Array of order IDs.
+	 */
+	public function get_unpaid_orders_gmt( $gmt_timestamp ) {
 		global $wpdb;
 
 		$orders_table    = self::get_orders_table_name();
@@ -985,7 +1018,7 @@ WHERE
 				AND {$orders_table}.status = %s
 				AND {$orders_table}.date_updated_gmt < %s",
 				'wc-pending',
-				gmdate( 'Y-m-d H:i:s', absint( $date ) )
+				gmdate( 'Y-m-d H:i:s', absint( $gmt_timestamp ) )
 			)
 		);
 		// phpcs:enable
@@ -1229,12 +1262,10 @@ WHERE
 		$post_order_modified_date = is_null( $post_order_modified_date ) ? 0 : $post_order_modified_date->getTimestamp();
 
 		/**
-		 * We are here because there was difference in posts and order data, although the sync is enabled.
-		 * When order modified date is more recent than post modified date, it can only mean that COT definitely has more updated version of the order.
-		 *
-		 * In a case where post meta was updated (without updating post_modified date), post_modified would be equal to order_modified date.
-		 *
-		 * So we write back to the order table when order modified date is more recent than post modified date. Otherwise, we write to the post table.
+		 * We are here because there was difference in the post and order data even though sync is enabled. If the modified date in
+		 * the post is the same or more recent than the modified date in the order object, we update the order object with the data
+		 * from the post. The opposite case is handled in 'backfill_post_record'. This mitigates the case where other plugins write
+		 * to the post or postmeta directly.
 		 */
 		if ( $post_order_modified_date >= $order_modified_date ) {
 			$this->migrate_post_record( $order, $post_order );
@@ -1414,17 +1445,6 @@ WHERE
 	}
 
 	/**
-	 * Log difference between post and COT data for an order.
-	 *
-	 * @param array $diff Difference between post and COT data.
-	 *
-	 * @return void
-	 */
-	private function log_diff( array $diff ): void {
-		$this->error_logger->notice( 'Diff found: ' . wp_json_encode( $diff, JSON_PRETTY_PRINT ) );
-	}
-
-	/**
 	 * Migrate post record from a given order object.
 	 *
 	 * @param \WC_Abstract_Order $order Order object.
@@ -1433,12 +1453,22 @@ WHERE
 	 * @return void
 	 */
 	private function migrate_post_record( \WC_Abstract_Order &$order, \WC_Abstract_Order $post_order ): void {
-		$this->migrate_meta_data_from_post_order( $order, $post_order );
+		$diff                 = $this->migrate_meta_data_from_post_order( $order, $post_order );
 		$post_order_base_data = $post_order->get_base_data();
 		foreach ( $post_order_base_data as $key => $value ) {
 			$this->set_order_prop( $order, $key, $value );
 		}
 		$this->persist_updates( $order, false );
+
+		/**
+		 * Fired when an HPOS order is updated from its corresponding post record on read due to a difference in the data.
+		 *
+		 * @since 8.5.0
+		 *
+		 * @param \WC_Order $order The order object.
+		 * @param array     $diff  Difference between HPOS data and post data.
+		 */
+		do_action( 'woocommerce_hpos_post_record_migrated_on_read', $order, $diff );
 	}
 
 	/**
@@ -1524,7 +1554,7 @@ WHERE
 	 *
 	 * @param array $ids List of order IDs.
 	 *
-	 * @return \stdClass[]|object|null DB Order objects or error.
+	 * @return \stdClass[] DB Order objects or error.
 	 */
 	protected function get_order_data_for_ids( $ids ) {
 		global $wpdb;
@@ -2481,7 +2511,7 @@ FROM $order_meta_table
 
 		// For backwards compat with CPT, trashing/untrashing and changing previously datastore-level props does not trigger the update hook.
 		if ( ( ! empty( $changes['status'] ) && in_array( 'trash', array( $changes['status'], $previous_status ), true ) )
-			|| ! array_diff_key( $changes, array_flip( $this->get_post_data_store_for_backfill()->get_internal_data_store_key_getters() ) ) ) {
+			|| ( ! empty( $changes ) && ! array_diff_key( $changes, array_flip( $this->get_post_data_store_for_backfill()->get_internal_data_store_key_getters() ) ) ) ) {
 			return;
 		}
 
@@ -2520,6 +2550,9 @@ FROM $order_meta_table
 		}
 
 		$this->persist_order_to_db( $order );
+
+		$this->update_order_meta( $order );
+
 		$order->save_meta_data();
 
 		if ( $backfill ) {
@@ -2580,8 +2613,10 @@ FROM $order_meta_table
 	private function update_address_index_meta( $order, $changes ) {
 		// If address changed, store concatenated version to make searches faster.
 		foreach ( array( 'billing', 'shipping' ) as $address_type ) {
-			if ( isset( $changes[ $address_type ] ) ) {
-				$order->update_meta_data( "_{$address_type}_address_index", implode( ' ', $order->get_address( $address_type ) ) );
+			$index_meta_key = "_{$address_type}_address_index";
+
+			if ( isset( $changes[ $address_type ] ) || ( is_a( $order, 'WC_Order' ) && empty( $order->get_meta( $index_meta_key ) ) ) ) {
+				$order->update_meta_data( $index_meta_key, implode( ' ', $order->get_address( $address_type ) ) );
 			}
 		}
 	}
@@ -2850,6 +2885,8 @@ CREATE TABLE $meta_table (
 	 * @return bool
 	 */
 	public function delete_meta( &$object, $meta ) {
+		global $wpdb;
+
 		if ( $this->should_backfill_post_record() && isset( $meta->id ) ) {
 			// Let's get the actual meta key before its deleted for backfilling. We cannot delete just by ID because meta IDs are different in HPOS and posts tables.
 			$db_meta = $this->data_store_meta->get_metadata_by_id( $meta->id );
@@ -2864,7 +2901,23 @@ CREATE TABLE $meta_table (
 
 		if ( ! $changes_applied && $object instanceof WC_Abstract_Order && $this->should_backfill_post_record() && isset( $meta->key ) ) {
 			self::$backfilling_order_ids[] = $object->get_id();
-			delete_post_meta( $object->get_id(), $meta->key, $meta->value );
+			if ( is_object( $meta->value ) && '__PHP_Incomplete_Class' === get_class( $meta->value ) ) {
+				$meta_value = maybe_serialize( $meta->value );
+				$wpdb->delete(
+					_get_meta_table( 'post' ),
+					array(
+						'post_id'    => $object->get_id(),
+						'meta_key'   => $meta->key, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+						'meta_value' => $meta_value, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+					),
+					array( '%d', '%s', '%s' )
+				);
+				wp_cache_delete( $object->get_id(), 'post_meta' );
+				$logger = wc_get_container()->get( LegacyProxy::class )->call_function( 'wc_get_logger' );
+				$logger->warning( sprintf( 'encountered an order meta value of type __PHP_Incomplete_Class during `delete_meta` in order with ID %d: "%s"', $object->get_id(), var_export( $meta_value, true ) ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+			} else {
+				delete_post_meta( $object->get_id(), $meta->key, $meta->value );
+			}
 			self::$backfilling_order_ids = array_diff( self::$backfilling_order_ids, array( $object->get_id() ) );
 		}
 
@@ -2926,7 +2979,7 @@ CREATE TABLE $meta_table (
 		method_exists( $meta, 'apply_changes' ) && $meta->apply_changes();
 
 		// Prevent this happening multiple time in same request.
-		if ( $this->should_save_after_meta_change( $order ) ) {
+		if ( $this->should_save_after_meta_change( $order, $meta ) ) {
 			$order->set_date_modified( current_time( 'mysql' ) );
 			$order->save();
 			return true;
@@ -2945,12 +2998,15 @@ CREATE TABLE $meta_table (
 	 * 1. Order modified date is already the current date, no updates needed in this case.
 	 * 2. If there are changes already queued for order object, then we don't need to update the modified date as it will be updated ina subsequent save() call.
 	 *
-	 * @param WC_Order $order Order object.
+	 * @param WC_Order           $order Order object.
+	 * @param \WC_Meta_Data|null $meta  Metadata object.
 	 *
 	 * @return bool Whether the modified date needs to be updated.
 	 */
-	private function should_save_after_meta_change( $order ) {
-		$current_date_time = new \WC_DateTime( current_time( 'mysql', 1 ), new \DateTimeZone( 'GMT' ) );
-		return $order->get_date_modified() < $current_date_time && empty( $order->get_changes() );
+	private function should_save_after_meta_change( $order, $meta = null ) {
+		$current_time      = $this->legacy_proxy->call_function( 'current_time', 'mysql', 1 );
+		$current_date_time = new \WC_DateTime( $current_time, new \DateTimeZone( 'GMT' ) );
+
+		return $order->get_date_modified() < $current_date_time && empty( $order->get_changes() ) && ( ! is_object( $meta ) || ! in_array( $meta->key, $this->ephemeral_meta_keys, true ) );
 	}
 }
